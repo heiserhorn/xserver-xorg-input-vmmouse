@@ -88,6 +88,7 @@ VMMouseProtoInOut(VMMouseProtoCmd *cmd) // IN/OUT
    uint32_t dummy;
 
    __asm__ __volatile__(
+        "pushl %%ebx"           "\n\t"
         "pushl %%eax"           "\n\t"
         "movl 20(%%eax), %%edi" "\n\t"
         "movl 16(%%eax), %%esi" "\n\t"
@@ -102,14 +103,15 @@ VMMouseProtoInOut(VMMouseProtoCmd *cmd) // IN/OUT
         "movl %%edx, 12(%%eax)" "\n\t"
         "movl %%ecx,  8(%%eax)" "\n\t"
         "movl %%ebx,  4(%%eax)" "\n\t"
-        "popl          (%%eax)"
+        "popl          (%%eax)" "\n\t"
+        "popl           %%ebx"
       : "=a" (dummy)
       : "0" (cmd)
       /*
        * vmware can modify the whole VM state without the compiler knowing
        * it. So far it does not modify EFLAGS. --hpreg
        */
-      : "ebx", "ecx", "edx", "esi", "edi", "memory"
+      : "ecx", "edx", "esi", "edi", "memory"
    );
 #else
 #error "VMMouse is only supported on x86 and x86-64."
