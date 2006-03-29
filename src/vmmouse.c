@@ -81,7 +81,7 @@
  */
 #define VMMOUSE_MAJOR_VERSION 12
 #define VMMOUSE_MINOR_VERSION 3
-#define VMMOUSE_PATCHLEVEL 1
+#define VMMOUSE_PATCHLEVEL 2
 
 /*****************************************************************************
  *	static function header

@@ -1,3 +1,11 @@
+2006-03-28  Philip Langdale  <plangdale@vmware.com>
+
+	* configure.ac:
+	* src/vmmouse.c: Bump PATCHLEVEL.
+	* src/vmmouse_proto.h: Use the right #define
+	when detecting a 64bit compilation. This fixes
+	the driver to actually work for 64bit builds.
+
 2006-01-16  Philip Langdale  <plangdale@vmware.com>
 
 	* configure.ac:

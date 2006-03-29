@@ -60,7 +60,7 @@
       uint32_t vE##_r; \
    }
 
-#ifdef VM_X86_64
+#ifdef __x86_64__
 
 #define DECLARE_REG64_STRUCT(_r) \
    union { \
