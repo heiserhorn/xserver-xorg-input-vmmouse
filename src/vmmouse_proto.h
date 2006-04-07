@@ -37,7 +37,7 @@
 #define _VMMOUSE_PROTO_H_
 
 #include <stdint.h>
-#include "xf86_libc.h"
+#include <unistd.h>
 
 #if !defined __i386__ && !defined __x86_64__ 
 #error The vmmouse protocol is only supported on x86 architectures.
