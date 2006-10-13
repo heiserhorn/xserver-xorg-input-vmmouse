@@ -1,0 +1,5 @@
+xserver-xorg-input-vmmouse (12.4.0-1) UNRELEASED; urgency=low
+
+  * Initial release, new in X11R7.
+
+ -- Drew Parsons <dparsons@debian.org>  Sat, 14 Oct 2006 09:31:29 +1000
