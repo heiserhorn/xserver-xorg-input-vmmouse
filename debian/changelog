@@ -1,7 +1,7 @@
-xserver-xorg-input-vmmouse (12.4.0-1) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (12.4.0-1) unstable; urgency=low
 
   * Initial release, new in X11R7.
   * Create patch 10_man_vmmouse_not_mouse to let the man page identify
     this is vmmouse, not mouse.
 
- -- Drew Parsons <dparsons@debian.org>  Sat, 14 Oct 2006 09:57:46 +1000
+ -- Drew Parsons <dparsons@debian.org>  Sun, 15 Oct 2006 02:28:56 +1000
