@@ -11,7 +11,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, xserver-xorg-core (>= 2:1.1.1-1)
 Provides: xserver-xorg-input
 Replaces: xserver-xorg (<< 6.8.2-35)
-Description: X.Org X server -- mouse input driver
+Description: X.Org X server -- VMMouse input driver to use with VMWare
  This package provides the driver for the X11 vmmouse input device.
  .
  The VMMouse driver enables support for the special VMMouse protocol
