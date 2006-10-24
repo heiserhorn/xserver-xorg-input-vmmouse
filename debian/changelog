@@ -1,3 +1,10 @@
+xserver-xorg-input-vmmouse (12.4.0-2) unstable; urgency=low
+
+  * Restrict to Architecture: i386 amd64, since vmmouse_proto.h
+    explicitly says only x86 (i386 or x86_64) is supported.
+
+ -- Drew Parsons <dparsons@debian.org>  Tue, 24 Oct 2006 18:37:21 +1000
+
 xserver-xorg-input-vmmouse (12.4.0-1) unstable; urgency=low
 
   * Initial release, new in X11R7.

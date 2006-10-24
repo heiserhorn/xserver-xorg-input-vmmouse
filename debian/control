@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 5), pkg-config, xserver-xorg-dev (>= 2:1.1.1-1), x1
 Standards-Version: 3.7.2
 
 Package: xserver-xorg-input-vmmouse
-Architecture: any
+Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, xserver-xorg-core (>= 2:1.1.1-1)
 Provides: xserver-xorg-input
 Replaces: xserver-xorg (<< 6.8.2-35)
