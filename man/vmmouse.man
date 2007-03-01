@@ -34,7 +34,7 @@ document.  This can be found
 in __projectroot__/lib/X11/doc/, or online at
 http://www.xfree86.org/current/mouse.html.
 .SH CONFIGURATION DETAILS
-Please refer to XF86Config(__filemansuffix__) for general configuration
+Please refer to __xconfigfile__(__filemansuffix__) for general configuration
 details and for options that can be used with all input drivers.  This
 section only covers configuration details specific to this driver.
 .PP
@@ -224,5 +224,5 @@ There are some other options that may be used to control various parameters
 for serial port communication, but they are not documented here because
 the driver sets them correctly for each mouse protocol type.
 .SH "SEE ALSO"
-XFree86(1), XF86Config(__filemansuffix__), xf86config(1), Xserver(1), X(__miscmansuffix__),
+__xservername__(1), __xconfigfile__(__filemansuffix__), xorgconfig(1), Xserver(1), X(__miscmansuffix__),
 README.mouse.
