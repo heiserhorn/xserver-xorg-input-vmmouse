@@ -1,0 +1,13 @@
+Index: xserver-xorg-input-vmmouse/configure.ac
+===================================================================
+--- xserver-xorg-input-vmmouse.orig/configure.ac	2007-04-25 01:07:49.000000000 +0200
++++ xserver-xorg-input-vmmouse/configure.ac	2007-04-25 01:07:53.000000000 +0200
+@@ -22,7 +22,7 @@
+ 
+ AC_PREREQ(2.57)
+ AC_INIT([xf86-input-vmmouse],
+-        12.4.0,
++        12.4.1,
+         [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
+         xf86-input-vmmouse)
+ 

@@ -1,4 +1,4 @@
-xserver-xorg-input-vmmouse (12.4.0-3) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (12.4.1-1) UNRELEASED; urgency=low
 
   [ Julien Cristau ]
   * Add link to xserver-xorg-core bug script, so that bugreports contain
@@ -6,6 +6,8 @@ xserver-xorg-input-vmmouse (12.4.0-3) UNRELEASED; urgency=low
   * Generate the dependency on xserver-xorg-core automatically.
 
   [ Brice Goglin ]
+  * New upstream release.
+  * Add 11_fix_configure_version.diff
   * Install the upstream changelog.
   * Bump Build-Depends: xserver-xorg-dev to >= 2:1.2.99.902
     (needed to let xsfbs get access to serverminver).
