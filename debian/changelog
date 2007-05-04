@@ -1,4 +1,4 @@
-xserver-xorg-input-vmmouse (12.4.1-1) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.4.1-1) UNRELEASED; urgency=low
 
   [ Julien Cristau ]
   * Add link to xserver-xorg-core bug script, so that bugreports contain
@@ -15,7 +15,10 @@ xserver-xorg-input-vmmouse (12.4.1-1) UNRELEASED; urgency=low
   * Add a link to www.X.org and a reference to the xf86-input-vmmouse
     module in the long description.
 
- -- Brice Goglin <Brice.Goglin@ens-lyon.org>  Wed, 25 Apr 2007 01:03:55 +0200
+  [ Timo Aaltonen ]
+  * Bump the epoch so that this can be synced to Ubuntu in the future.
+
+ -- Timo Aaltonen <tjaalton@cc.hut.fi>  Fri,  4 May 2007 17:03:42 +0300
 
 xserver-xorg-input-vmmouse (12.4.0-2) unstable; urgency=low
 
