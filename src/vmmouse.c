@@ -344,7 +344,9 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    pInfo->flags = XI86_POINTER_CAPABLE | XI86_SEND_DRAG_EVENTS;
    pInfo->device_control = VMMouseDeviceControl;
    pInfo->read_input = VMMouseReadInput;
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
    pInfo->motion_history_proc = xf86GetMotionEvents;
+#endif
    pInfo->control_proc = VMMouseControlProc;
    pInfo->close_proc = VMMouseCloseProc;
    pInfo->switch_mode = VMMouseSwitchMode;
@@ -774,8 +776,18 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 
       InitPointerDeviceStruct((DevicePtr)device, map,
 			      min(pMse->buttons, MSE_MAXBUTTONS),
-			      miPointerGetMotionEvents, pMse->Ctrl,
-			      miPointerGetMotionBufferSize());
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
+				miPointerGetMotionEvents,
+#else
+                                GetMotionHistory,
+#endif
+                                pMse->Ctrl,
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
+				miPointerGetMotionBufferSize()
+#else
+                                GetMotionHistorySize(), 2
+#endif
+                                );
 
       /* X valuator */
       xf86InitValuatorAxisStruct(device, 0, 0, -1, 1, 0, 1);
@@ -783,7 +795,9 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
       /* Y valuator */
       xf86InitValuatorAxisStruct(device, 1, 0, -1, 1, 0, 1);
       xf86InitValuatorDefaults(device, 1);
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
       xf86MotionHistoryAllocate(pInfo);
+#endif
 
       xf86Msg(X_INFO, "VMWARE(0): VMMOUSE DEVICE_INIT\n");
 #ifdef EXTMOUSEDEBUG
