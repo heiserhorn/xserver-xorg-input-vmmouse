@@ -14,6 +14,10 @@ xserver-xorg-input-vmmouse (1:12.4.2-1) UNRELEASED; urgency=low
   * Add XS-Vcs-*.
   * Add a link to www.X.org and a reference to the xf86-input-vmmouse
     module in the long description.
+  * Add upstream URL to debian/copyright.
+  * Build against xserver 1.4.
+  * Generate the Provides field automatically.
+  * Add myself to uploaders, and remove Branden with his permission.
 
   [ Timo Aaltonen ]
   * Bump the epoch so that this can be synced to Ubuntu in the future.
