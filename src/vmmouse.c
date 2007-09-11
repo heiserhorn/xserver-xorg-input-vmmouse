@@ -77,11 +77,32 @@
 #include "vmmouse_client.h"
 
 /*
+ * This is the only way I know to turn a #define of an integer constant into
+ * a constant string.
+ */
+#define VMW_INNERSTRINGIFY(s) #s
+#define VMW_STRING(str) VMW_INNERSTRINGIFY(str)
+
+/*
  * Version constants
  */
 #define VMMOUSE_MAJOR_VERSION 12
 #define VMMOUSE_MINOR_VERSION 4
-#define VMMOUSE_PATCHLEVEL 0
+#define VMMOUSE_PATCHLEVEL 2
+#define VMMOUSE_DRIVER_VERSION \
+   (VMMOUSE_MAJOR_VERSION * 65536 + VMMOUSE_MINOR_VERSION * 256 + VMMOUSE_PATCHLEVEL)
+#define VMMOUSE_DRIVER_VERSION_STRING \
+    VMW_STRING(VMMOUSE_MAJOR_VERSION) "." VMW_STRING(VMMOUSE_MINOR_VERSION) \
+    "." VMW_STRING(VMMOUSE_PATCHLEVEL)
+
+/*
+ * Standard four digit version string expected by VMware Tools installer.
+ * As the driver's version is only  {major, minor, patchlevel}, simply append an
+ * extra zero for the fourth digit.
+ */
+const char vm_version[] __attribute__((section(".modinfo"),unused)) =
+    "version=" VMMOUSE_DRIVER_VERSION_STRING ".0";
+
 
 /*****************************************************************************
  *	static function header
