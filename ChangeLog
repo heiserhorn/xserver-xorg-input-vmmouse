@@ -1,25 +1,90 @@
-2006-04-06  Adam Jackson  <ajax@freedesktop.org>
+commit b1ca22c8bdaa2450d98d5043b504d4a4fe412128
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Mon Sep 10 21:17:12 2007 -0700
 
-	* configure.ac:
-	* src/vmmouse.c:
-	* src/vmmouse_proto.h:
-	Unlibcwrap.  Bump server version requirement.  Bump to 12.4.0.
+    Guard modinfo section against gcc.
 
-2006-03-28  Philip Langdale  <plangdale@vmware.com>
+commit b20b4c2388a19885b8d686bbc184d69bed5585d9
+Merge: 0cd80f9... d8e1d4d...
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Mon Sep 10 20:46:13 2007 -0700
 
-	* configure.ac:
-	* src/vmmouse.c: Bump PATCHLEVEL.
-	* src/vmmouse_proto.h: Use the right #define
-	when detecting a 64bit compilation. This fixes
-	the driver to actually work for 64bit builds.
+    Merge branch 'master' of git+ssh://git.freedesktop.org/git/xorg/driver/xf86-input-vmmouse
 
-2006-01-16  Philip Langdale  <plangdale@vmware.com>
+commit 0cd80f9869feef92261d0972f3d2d018a3dcfb18
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Mon Sep 10 20:45:58 2007 -0700
 
-	* configure.ac:
-	* src/vmmouse.c: Bump PATCHLEVEL.
-	* src/vmmouse_proto.c: push/pop ebx to keep
-	gcc4 happy when compiling with -fPIC.
+    Ready 12.4.2 release.
+    
+    To allow for easier detection of driver version by other VMware tools,
+    we are embedding the version in a .modinfo section so that the Linux
+    kernel 'modinfo' tool can be (ab)used to check it.
 
-2006-01-06  Philip Langdale  <plangdale@vmware.com>
+commit d8e1d4d1f4eeeb87c573810c0f0d141fe180bb01
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Tue Aug 28 17:39:11 2007 -0700
 
-	* Initial release.
+    Port to new motion history/InitPointerDeviceStruct ABI
+    
+    (Copied from daniels' fix to xf86-input-mouse)
+
+commit 5a4e1fe50b1a38cfc489eff49f5a729bd726cd23
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Mon Jul 9 13:46:33 2007 -0700
+
+    Add copyright statement to man page.
+
+commit e854c0c989b57e3d862c363a9c16ee4db315274f
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Tue Jun 26 14:52:32 2007 -0700
+
+    Update the man page to more closely reflect reality.
+    Problems pointed out by Jason MacIntyre. Thanks!
+
+commit 078666eac54f5672e5e7df2f79c92ac412976cd9
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu Mar 1 10:36:23 2007 -0800
+
+    renamed: .cvsignore -> .gitignore
+
+commit ceb33299a512f368529dd052f4acab695b172c7f
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu Mar 1 10:35:12 2007 -0800
+
+    Replace references to XFree86/XF86Config in man page
+
+commit 87d047e6132d5734ab65f0ef18354608dae39ec8
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Tue Feb 27 18:02:43 2007 -0800
+
+    Under certain circumstances, typically when the kernel PS/2 driver decides
+    to reset the PS/2 device, we can find ourselves in an inconsistent state
+    between the vmmouse driver and the virtual hardware. When this is encountered,
+    we should re-request absolute mode from the hardware to get back in sync.
+
+commit 16e12c2c08a92a7bb9c11d4a359bf9904998e93f
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Fri Apr 7 18:17:10 2006 +0000
+
+    Unlibcwrap. Bump server version requirement. Bump to 12.4.0.
+
+commit 6a74d428e2ce1ad07b9dc8b361bd7c2e71dd19d0
+Author: philipl <philipl>
+Date:   Wed Mar 29 02:36:23 2006 +0000
+
+    Bump PATCHLEVEL.
+    Use the right #define when detecting a 64bit compilation. This fixes the
+        driver to actually work for 64bit builds.
+
+commit 1d7b250cbda0b96a494a17fdfb53eb971907a35b
+Author: philipl <philipl>
+Date:   Mon Jan 16 23:54:15 2006 +0000
+
+    Fix for compilation with gcc4 and PIC.
+
+commit ee148a2f8ef97557ec2db501295ed8227699d2bf
+Author: philipl <philipl>
+Date:   Mon Jan 9 19:12:26 2006 +0000
+
+    Initial release of the vmmouse driver for VMware virtual machines.
