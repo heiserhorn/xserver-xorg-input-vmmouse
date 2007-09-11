@@ -100,8 +100,10 @@
  * As the driver's version is only  {major, minor, patchlevel}, simply append an
  * extra zero for the fourth digit.
  */
+#ifdef __GNUC__
 const char vm_version[] __attribute__((section(".modinfo"),unused)) =
     "version=" VMMOUSE_DRIVER_VERSION_STRING ".0";
+#endif
 
 
 /*****************************************************************************
