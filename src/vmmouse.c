@@ -84,6 +84,13 @@
 #define VMW_STRING(str) VMW_INNERSTRINGIFY(str)
 
 /*
+ * So that the file compiles unmodified when dropped into an xfree source tree.
+ */
+#ifndef XORG_VERSION_CURRENT
+#define XORG_VERSION_CURRENT XF86_VERSION_CURRENT
+#endif
+
+/*
  * Version constants
  */
 #define VMMOUSE_MAJOR_VERSION 12
