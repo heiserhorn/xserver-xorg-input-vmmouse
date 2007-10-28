@@ -84,11 +84,18 @@
 #define VMW_STRING(str) VMW_INNERSTRINGIFY(str)
 
 /*
+ * So that the file compiles unmodified when dropped into an xfree source tree.
+ */
+#ifndef XORG_VERSION_CURRENT
+#define XORG_VERSION_CURRENT XF86_VERSION_CURRENT
+#endif
+
+/*
  * Version constants
  */
 #define VMMOUSE_MAJOR_VERSION 12
 #define VMMOUSE_MINOR_VERSION 4
-#define VMMOUSE_PATCHLEVEL 2
+#define VMMOUSE_PATCHLEVEL 3
 #define VMMOUSE_DRIVER_VERSION \
    (VMMOUSE_MAJOR_VERSION * 65536 + VMMOUSE_MINOR_VERSION * 256 + VMMOUSE_PATCHLEVEL)
 #define VMMOUSE_DRIVER_VERSION_STRING \
@@ -101,7 +108,7 @@
  * extra zero for the fourth digit.
  */
 #ifdef __GNUC__
-const char vm_version[] __attribute__((section(".modinfo"),unused)) =
+const char vm_mouse_version[] __attribute__((section(".modinfo"),unused)) =
     "version=" VMMOUSE_DRIVER_VERSION_STRING ".0";
 #endif
 
