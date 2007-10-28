@@ -1,3 +1,23 @@
+commit ca4cc3fed99457add3935f8a063558b51e816d74
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Tue Sep 25 16:18:53 2007 -0700
+
+    Update for 12.4.3 release.
+
+commit 4840be10e99a77d567ee9122f57c6fb6b5208cd9
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Mon Sep 24 12:03:56 2007 -0700
+
+    Add compatibility #define for compilation on pre-X.Org
+    versions of the Xserver.
+
+commit d89b0ffc1b994fb8e19cecbab683478b599fea73
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Mon Sep 24 11:48:39 2007 -0700
+
+    There are problems when running with old X releases with a
+    global symbol collision with the svga driver.
+
 commit b1ca22c8bdaa2450d98d5043b504d4a4fe412128
 Author: Philip Langdale <philipl@fido2.homeip.net>
 Date:   Mon Sep 10 21:17:12 2007 -0700
