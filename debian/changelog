@@ -1,3 +1,10 @@
+xserver-xorg-input-vmmouse (1:12.4.3-2) UNRELEASED; urgency=low
+
+  * Scale input events, as X 1.4 doesn't do that itself anymore.
+    Patch by Joerg Platte <jplatte@naasa.net> (closes: #442853).
+
+ -- Julien Cristau <jcristau@debian.org>  Thu, 03 Jan 2008 15:10:01 +0100
+
 xserver-xorg-input-vmmouse (1:12.4.3-1) unstable; urgency=low
 
   * New upstream version.
