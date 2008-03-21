@@ -490,7 +490,13 @@ VMMouseDoPostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy)
     buttons = reverseBits(reverseMap, buttons);
 
     if (dx || dy) {
-       xf86PostMotionEvent(pInfo->dev, !mPriv->relative, 0, 2, dx, dy);
+
+        /*
+         * The Xserver no longer calls an input device's conversion_proc
+         * to convert x and y coordinates from device to screen space.
+         */
+        VMMouseConvertProc(pInfo, 0, 2, dx, dy, 0, 0, 0, 0, &dx, &dy);
+        xf86PostMotionEvent(pInfo->dev, !mPriv->relative, 0, 2, dx, dy);
     }
     
     if (truebuttons != pMse->lastButtons) {
