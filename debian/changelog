@@ -3,6 +3,8 @@ xserver-xorg-input-vmmouse (1:12.5.0-1) UNRELEASED; urgency=low
   * New upstream release.
   * Drop patch vmmouse_scale_input_data.diff, this should be fixed upstream
     now.
+  * Build against xserver 1.5 rc1.
+  * Bump Standards-Version to 3.7.3.
 
  -- Julien Cristau <jcristau@debian.org>  Fri, 21 Mar 2008 21:32:47 +0100
 
