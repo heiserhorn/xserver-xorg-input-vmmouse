@@ -1,3 +1,38 @@
+commit f9629096c1e0ac0e090642cf6a53674842aaf9a8
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Thu Mar 20 16:53:05 2008 -0400
+
+    vmmouse 12.5.0
+
+commit a88387f1276d598843ffa0cd3648f8bf34d10680
+Author: Matthieu Herrb <matthieu@bluenote.herrb.net>
+Date:   Sat Mar 8 23:17:40 2008 +0100
+
+    Makefile.am: nuke RCS Id
+
+commit c312189cedf7526d61ced521f275ad5c4a972610
+Author: Vinay Bondhugula <vinayb@vmware.com>
+Date:   Tue Jan 22 23:32:12 2008 -0800
+
+    Fix device to screen space coordinate conversion
+    
+    The Xserver no longer calls an input device's conversion_proc to convert x and
+    y coordinates from device to screen space. This fix calls the conversion
+    routine in vmmouse.c before posting the motion event to Xserver.
+    
+    Other drivers also seem to rely on conversion_proc, so the real fix should probably
+    go into Xserver's code (maybe in xserver/hw/xfree86/common/xf86Xinput.c?).
+
+commit ca3eb5abeb187a1e40ff7c36bf87d52efb999be9
+Author: Vinay Bondhugula <vinayb@vmware.com>
+Date:   Sat Jan 19 09:07:16 2008 -0800
+
+    Fix an old sign bug for the relative mode
+    
+    Higher order bits for the X and Y inputs (which could be set in case of a
+    relative mouse) were being zeroed off in VMMouseClient_GetInput. This change
+    fixes it.
+
 commit ca4cc3fed99457add3935f8a063558b51e816d74
 Author: Philip Langdale <philipl@fido2.homeip.net>
 Date:   Tue Sep 25 16:18:53 2007 -0700
