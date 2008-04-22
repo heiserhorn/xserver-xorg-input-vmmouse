@@ -32,11 +32,11 @@
  *
  * 	This is a modified version of the mouse input driver
  * 	provided in Xserver/hw/xfree86/input/mouse/mouse.c
- *      
+ *
  *      Although all data is read using the vmmouse protocol, notification
  *      is still done through the PS/2 port, so all the basic code for
  *      interacting with the port is retained.
- * 	
+ *
  */
 
 
@@ -94,8 +94,8 @@
  * Version constants
  */
 #define VMMOUSE_MAJOR_VERSION 12
-#define VMMOUSE_MINOR_VERSION 4
-#define VMMOUSE_PATCHLEVEL 3
+#define VMMOUSE_MINOR_VERSION 5
+#define VMMOUSE_PATCHLEVEL 1
 #define VMMOUSE_DRIVER_VERSION \
    (VMMOUSE_MAJOR_VERSION * 65536 + VMMOUSE_MINOR_VERSION * 256 + VMMOUSE_PATCHLEVEL)
 #define VMMOUSE_DRIVER_VERSION_STRING \
