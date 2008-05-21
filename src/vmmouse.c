@@ -139,8 +139,8 @@ static void MouseCtrl(DeviceIntPtr device, PtrCtrl *ctrl);
  *****************************************************************************/
 typedef struct {
    int 		screenNum;
-   Bool 	vmmouseAvailable; 
-   Bool		relative; 
+   Bool 	vmmouseAvailable;
+   Bool		relative;
 } VMMousePrivRec, *VMMousePrivPtr;
 
 static const char *reqSymbols[] = {
@@ -195,7 +195,7 @@ InputDriverRec VMMOUSE = {
    "vmmouse",
    NULL,
    VMMousePreInit,
-   VMMouseUnInit,  
+   VMMouseUnInit,
    NULL,
    0
 };
@@ -231,8 +231,8 @@ typedef enum {
 /*
  * Define the acceptable mouse options
  * Currently not all of those options are supported
- * 
- */ 
+ *
+ */
 static const OptionInfoRec mouseOptions[] = {
     { OPTION_ALWAYS_CORE,	"AlwaysCore",	  OPTV_BOOLEAN,	{0}, FALSE },
     { OPTION_SEND_CORE_EVENTS,	"SendCoreEvents", OPTV_BOOLEAN,	{0}, FALSE },
@@ -277,12 +277,12 @@ static char reverseMap[32] = { 0,  4,  2,  6,  1,  5,  3,  7,
  *	This function collect all the information that is necessary to
  *	determine the configuration of the hardware and to prepare the
  *	device for being used
- * 
+ *
  * Results:
  * 	An InputInfoPtr object which points to vmmouse's information,
  *	if the absolute pointing device available
  *	Otherwise, an InputInfoPtr of regular mouse
- *	
+ *
  * Side effects:
  * 	VMMouse was initialized with necessary information
  *
@@ -291,7 +291,7 @@ static char reverseMap[32] = { 0,  4,  2,  6,  1,  5,  3,  7,
 
 static InputInfoPtr
 VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
-{              
+{
    InputInfoPtr pInfo;
    MouseDevPtr pMse;
    VMMousePrivPtr mPriv;
@@ -299,14 +299,14 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
 
    /*
     * let Xserver init the mouse first
-    */ 
+    */
    osInfo = xf86OSMouseInit(0);
    if (!osInfo)
       return FALSE;
-   
+
    mPriv = xcalloc (1, sizeof (VMMousePrivRec));
 
-   
+
    if (!mPriv) {
       return NULL;
    }
@@ -328,7 +328,7 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
       } else {
 	 return NULL;
       }
-      
+
    } else {
       /*
        * vmmouse is available
@@ -339,16 +339,16 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
        * Disable the absolute pointing device for now
        * It will be enabled during DEVICE_ON phase
        */
-      VMMouseClient_Disable(); 	
+      VMMouseClient_Disable();
    }
-   
+
    if (!(pInfo = xf86AllocateInput(drv, 0))) {
       xfree(mPriv);
       return NULL;
-   }	
+   }
 
    /* Settup the pInfo */
-   pInfo->name = dev->identifier;			
+   pInfo->name = dev->identifier;
    pInfo->type_name = XI_MOUSE;
    pInfo->flags = XI86_POINTER_CAPABLE | XI86_SEND_DRAG_EVENTS;
    pInfo->device_control = VMMouseDeviceControl;
@@ -378,7 +378,7 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    pMse->PostEvent = VMMousePostEvent;
    pMse->CommonOptions = MouseCommonOptions;
    pMse->mousePriv = mPriv;
-   
+
 
    /* Collect the options, and process the common options. */
    xf86CollectInputOptions(pInfo, NULL, NULL);
@@ -400,13 +400,13 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    }
    xf86CloseSerial(pInfo->fd);
    pInfo->fd = -1;
-   
+
    /* Process the options */
    pMse->CommonOptions(pInfo);
-   
+
    /* set up the current screen num */
    mPriv->screenNum = xf86SetIntOption(pInfo->options, "ScreenNumber", 0);
-    
+
    pInfo->flags |= XI86_CONFIGURED;
    return pInfo;
 }
@@ -424,11 +424,11 @@ VMMouseAvailableOptions(void *unused)
  *----------------------------------------------------------------------
  *
  * MouseCtrl --
- *     Alter the control paramters for the mouse. 
- *	
+ *     Alter the control paramters for the mouse.
+ *
  * Results:
- * 	None 
- *	
+ * 	None
+ *
  * Side effects:
  * 	None
  *
@@ -447,7 +447,7 @@ MouseCtrl(DeviceIntPtr device, PtrCtrl *ctrl)
 #ifdef EXTMOUSEDEBUG
     xf86Msg(X_INFO, "VMMOUSE(0): MouseCtrl pMse=%p\n", pMse);
 #endif
-    
+
     pMse->num       = ctrl->num;
     pMse->den       = ctrl->den;
     pMse->threshold = ctrl->threshold;
@@ -459,10 +459,10 @@ MouseCtrl(DeviceIntPtr device, PtrCtrl *ctrl)
  *
  * VMMouseDoPostEvent --
  *	Post the mouse button event and mouse motion event to Xserver
- *	
+ *
  * Results:
  * 	None
- *	
+ *
  * Side effects:
  * 	Mouse location and button status was updated
  *
@@ -476,7 +476,7 @@ VMMouseDoPostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy)
     VMMousePrivPtr mPriv;
     int truebuttons;
     int id, change;
-    
+
     pMse = pInfo->private;
     mPriv = (VMMousePrivPtr)pMse->mousePriv;
 
@@ -484,21 +484,23 @@ VMMouseDoPostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy)
      * The following truebuttons/reverseBits and lastButtons are
      * used to compare the current buttons and the previous buttons
      * to find the button changes during two mouse events
-     */ 
+     */
     truebuttons = buttons;
 
     buttons = reverseBits(reverseMap, buttons);
 
     if (dx || dy) {
 
+#ifdef CALL_CONVERSION_PROC
         /*
-         * The Xserver no longer calls an input device's conversion_proc
-         * to convert x and y coordinates from device to screen space.
+         * Xservers between 1.3.99.0 - 1.4.0.90 do not call conversion_proc, so
+         * we need to do the conversion from device to screen space.
          */
         VMMouseConvertProc(pInfo, 0, 2, dx, dy, 0, 0, 0, 0, &dx, &dy);
+#endif
         xf86PostMotionEvent(pInfo->dev, !mPriv->relative, 0, 2, dx, dy);
     }
-    
+
     if (truebuttons != pMse->lastButtons) {
        change = buttons ^ reverseBits(reverseMap, pMse->lastButtons);
        while (change) {
@@ -518,10 +520,10 @@ VMMouseDoPostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy)
  * VMMousePostEvent --
  *	Prepare the mouse status according to the Z axis mapping
  *	before we post the event to Xserver
- *	
+ *
  * Results:
  * 	None
- *	
+ *
  * Side effects:
  * 	Buttons was updated according to Z axis mapping
  *
@@ -534,7 +536,7 @@ VMMousePostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy, int dz, int dw
     MouseDevPtr pMse;
     int zbutton = 0;
     VMMousePrivPtr mPriv;
-    
+
     pMse = pInfo->private;
     mPriv = (VMMousePrivPtr)pMse->mousePriv;
     /* Map the Z axis movement. */
@@ -547,7 +549,7 @@ VMMousePostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy, int dz, int dw
 	   if(mPriv->relative)
 	      dx = dz;
 	   else
-	      dx += dz; 
+	      dx += dz;
 	    dz = 0;
 	}
 	break;
@@ -556,7 +558,7 @@ VMMousePostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy, int dz, int dw
 	   if(mPriv->relative)
 	      dy = dz;
 	   else
-	      dy += dz; 
+	      dy += dz;
 	    dz = 0;
 	}
 	break;
@@ -606,7 +608,7 @@ VMMousePostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy, int dz, int dw
  *
  * Results:
  * 	None
- *	
+ *
  * Side effects:
  * 	None
  *
@@ -637,11 +639,11 @@ FlushButtons(MouseDevPtr pMse)
  * MouseCommonOptions --
  *	Process acceptable mouse options. Currently we only process
  *	"Buttons" and "ZAxisMapping" options.
- *	More options can be added later on 
+ *	More options can be added later on
  *
  * Results:
  * 	None
- *	
+ *
  * Side effects:
  * 	The buttons was setup according to the options
  *
@@ -696,9 +698,9 @@ MouseCommonOptions(InputInfoPtr pInfo)
 	 pMse->positiveZ = pMse->positiveW = 1 << (b2-1);
 	 if (b1 > pMse->buttons) pMse->buttons = b1;
 	 if (b2 > pMse->buttons) pMse->buttons = b2;
-	 
+
 	 /*
-	  * Option "ZAxisMapping" "N1 N2 N3 N4" not supported 
+	  * Option "ZAxisMapping" "N1 N2 N3 N4" not supported
 	  */
 	 pMse->negativeW = pMse->positiveW = MSE_NOZMAP;
       } else {
@@ -719,7 +721,7 @@ MouseCommonOptions(InputInfoPtr pInfo)
     */
    if (origButtons != pMse->buttons)
       from = X_CONFIG;
-    
+
 }
 
 
@@ -732,14 +734,14 @@ MouseCommonOptions(InputInfoPtr pInfo)
  *
  * Results:
  * 	None
- *	
+ *
  * Side effects:
  * 	None
  *
  *----------------------------------------------------------------------
  */
 
-static void 
+static void
 VMMouseUnInit(InputDriverPtr drv, LocalDevicePtr local, int flags)
 {
    xf86Msg(X_INFO, "VMWARE(0): VMMouseUnInit\n");
@@ -751,12 +753,12 @@ VMMouseUnInit(InputDriverPtr drv, LocalDevicePtr local, int flags)
  *
  * VMMouseDeviceControl --
  * 	This function was called by Xserver during DEVICE_INIT, DEVICE_ON,
- *	DEVICE_OFF and DEVICE_CLOSE phase 
- *	
+ *	DEVICE_OFF and DEVICE_CLOSE phase
+ *
  * Results:
  * 	TRUE, if sucessful
  *	FALSE, if failed
- *	
+ *
  * Side effects:
  * 	Absolute pointing device is enabled during DEVICE_ON
  *	Absolute pointing device is disabled during DEVICE_OFF
@@ -773,11 +775,11 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
    VMMousePrivPtr mPriv;
    unsigned char map[MSE_MAXBUTTONS + 1];
    int i;
-    
+
    pInfo = device->public.devicePrivate;
    pMse = pInfo->private;
    pMse->device = device;
-   mPriv = (VMMousePrivPtr)pMse->mousePriv;    
+   mPriv = (VMMousePrivPtr)pMse->mousePriv;
 
    switch (mode){
    case DEVICE_INIT:
@@ -837,17 +839,17 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 	       /*
 		* enable absolute pointing device here
 		*/
-	       if (!VMMouseClient_Enable()) { 
+	       if (!VMMouseClient_Enable()) {
 		  xf86Msg(X_ERROR, "VMWARE(0): vmmouse enable failed\n");
 		  mPriv->vmmouseAvailable = FALSE;
 		  device->public.on = FALSE;
 		  return FALSE;
 	       } else {
-		  mPriv->vmmouseAvailable = TRUE; 
+		  mPriv->vmmouseAvailable = TRUE;
 		  VMMouseClient_RequestAbsolute();
 		  mPriv->relative = FALSE;
 		  xf86Msg(X_INFO, "VMWARE(0): vmmouse enabled\n");
-	       }		
+	       }
 	    }
 	    xf86FlushInput(pInfo->fd);
 	    xf86AddEnabledDevice(pInfo);
@@ -856,7 +858,7 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
       pMse->lastButtons = 0;
       device->public.on = TRUE;
       FlushButtons(pMse);
-      break;	
+      break;
    case DEVICE_OFF:
    case DEVICE_CLOSE:
       xf86Msg(X_INFO, "VMWARE(0): VMMOUSE DEVICE_OFF/CLOSE\n");
@@ -867,7 +869,7 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 	    VMMouseClient_Disable();
 	    mPriv->vmmouseAvailable = FALSE;
 	 }
-	    
+
 	 xf86RemoveEnabledDevice(pInfo);
 	 if (pMse->buffer) {
 	    XisbFree(pMse->buffer);
@@ -892,15 +894,15 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
  * VMMouseReadInput --
  * 	This function was called by Xserver when there is data available
  *	in the input device
- *	
+ *
  * Results:
  * 	None
- *		
+ *
  * Side effects:
  * 	Input data in regular PS/2 fd was cleared
  *	Real mouse data was read from the absolute pointing device
  *	and posted to Xserver
- *	
+ *
  *----------------------------------------------------------------------
  */
 
@@ -908,16 +910,16 @@ static void
 VMMouseReadInput(InputInfoPtr pInfo)
 {
    MouseDevPtr pMse;
-   VMMousePrivPtr mPriv; 
+   VMMousePrivPtr mPriv;
    int c;
-   int len = 0; 
+   int len = 0;
 
    pMse = pInfo->private;
    mPriv = pMse->mousePriv;
- 
+
    /*
     * First read the bytes in input device to clear the regular PS/2 fd so
-    * we don't get called again. 
+    * we don't get called again.
     */
    /*
     * Set blocking to -1 on the first call because we know there is data to
@@ -930,10 +932,10 @@ VMMouseReadInput(InputInfoPtr pInfo)
       len++;
       /*
        * regular PS packet consists of 3 bytes
-       * We read 3 bytes to drain the PS/2 packet 
+       * We read 3 bytes to drain the PS/2 packet
        */
       if(len < 3) continue;
-      len = 0; 
+      len = 0;
       /*
        * Now get the real data from absolute pointing device
        */
@@ -952,14 +954,14 @@ VMMouseReadInput(InputInfoPtr pInfo)
  * GetVMMouseMotionEvent --
  * 	Read all the mouse data available from the absolute
  * 	pointing device	and post it to the Xserver
- *	
+ *
  * Results:
  * 	None
- *		
+ *
  * Side effects:
  *	Real mouse data was read from the absolute pointing
  *	device and posted to Xserver
- *	
+ *
  *----------------------------------------------------------------------
  */
 
@@ -971,7 +973,7 @@ GetVMMouseMotionEvent(InputInfoPtr pInfo){
    int ps2Buttons = 0;
    int numPackets;
 
-   pMse = pInfo->private;  
+   pMse = pInfo->private;
    while((numPackets = VMMouseClient_GetInput(&vmmouseInput))){
       if (numPackets == VMMOUSE_ERROR) {
          VMMouseClient_Disable();
@@ -987,13 +989,13 @@ GetVMMouseMotionEvent(InputInfoPtr pInfo){
 	 ps2Buttons |= 0x02; 			/* Right*/
       if(vmmouseInput.Buttons & VMMOUSE_LEFT_BUTTON)
 	 ps2Buttons |= 0x01; 			/* Left*/
-	      
+
       buttons = (ps2Buttons & 0x04) >> 1 |	/* Middle */
 	 (ps2Buttons & 0x02) >> 1 |       	/* Right */
 	 (ps2Buttons & 0x01) << 2;       	/* Left */
-	   
+
       dx = vmmouseInput.X;
-      dy = vmmouseInput.Y; 
+      dy = vmmouseInput.Y;
       dz = (char)vmmouseInput.Z;
       dw = 0;
       /* post an event */
@@ -1006,11 +1008,11 @@ GetVMMouseMotionEvent(InputInfoPtr pInfo){
  *----------------------------------------------------------------------
  *
  * VMMouseControlProc --
- *	This function is unused 
+ *	This function is unused
  *
  * Results:
  * 	None
- *	
+ *
  * Side effects:
  * 	None
  *
@@ -1029,11 +1031,11 @@ VMMouseControlProc(LocalDevicePtr local, xDeviceCtl * control)
  *----------------------------------------------------------------------
  *
  *  VMMouseCloseProc --
- *	This function is unused 
+ *	This function is unused
  *
  * Results:
  * 	None
- *	
+ *
  * Side effects:
  * 	None
  *
@@ -1051,11 +1053,11 @@ VMMouseCloseProc(LocalDevicePtr local)
  *----------------------------------------------------------------------
  *
  *  VMMouseSwitchProc --
- *	This function is unused 
+ *	This function is unused
  *
  * Results:
  * 	None
- *	
+ *
  * Side effects:
  * 	None
  *
@@ -1075,13 +1077,13 @@ VMMouseSwitchMode(ClientPtr client, DeviceIntPtr dev, int mode)
  *
  * VMMouseConvertProc  --
  * 	This function was called by Xserver to convert valuators to X and Y
- *	
+ *
  * Results:
  * 	TRUE
- *		
+ *
  * Side effects:
  * 	X and Y was converted according to current Screen dimension
- *	
+ *
  *----------------------------------------------------------------------
  */
 
@@ -1098,17 +1100,17 @@ VMMouseConvertProc(InputInfoPtr pInfo, int first, int num, int v0, int v1, int v
 
    if (first != 0 || num != 2)
       return FALSE;
-   
+
    if(mPriv->relative) {
       *x = v0;
       *y = v1;
    } else {
       factorX = ((double) screenInfo.screens[mPriv->screenNum]->width) / (double) 65535;
       factorY = ((double) screenInfo.screens[mPriv->screenNum]->height) / (double) 65535;
-      
+
       *x = v0 * factorX + 0.5;
       *y = v1 * factorY + 0.5;
-      
+
       if (mPriv->screenNum != -1) {
 	 xf86XInputSetScreen(pInfo, mPriv->screenNum, *x, *y);
       }
@@ -1132,13 +1134,13 @@ ModuleInfoRec VMMouseInfo = {
  *
  * VMMouseUnplug  --
  * 	This function was called by Xserver when unplug
- *	
+ *
  * Results:
  * 	None
- *		
+ *
  * Side effects:
  * 	None
- *	
+ *
  *----------------------------------------------------------------------
  */
 
@@ -1154,16 +1156,16 @@ VMMouseUnplug(pointer p)
  *
  * VMMousePlug  --
  * 	This function was called when Xserver load vmmouse module. It will
- * 	integrate the  module infto the XFree86 loader architecutre. 
- *	
+ * 	integrate the  module infto the XFree86 loader architecutre.
+ *
  * Results:
  * 	TRUE
- *		
+ *
  * Side effects:
- * 	Regular mouse module was loaded as a submodule. In case 
+ * 	Regular mouse module was loaded as a submodule. In case
  * 	absolute pointing device is not available, we can always fall back
  *	to the regular mouse module
- *	
+ *
  *----------------------------------------------------------------------
  */
 
@@ -1177,7 +1179,7 @@ VMMousePlug(pointer	module,
    char *name;
 
    xf86LoaderReqSymLists(reqSymbols, NULL);
-   
+
    if (!Initialised) {
       Initialised = TRUE;
 #ifndef REMOVE_LOADER_CHECK_MODULE_INFO
@@ -1204,7 +1206,7 @@ VMMousePlug(pointer	module,
       LoaderErrorMsg(NULL, name, *errmaj, *errmin);
    }
    xfree(name);
-    
+
    return module;
 }
 

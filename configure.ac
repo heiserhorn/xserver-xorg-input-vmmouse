@@ -80,7 +80,12 @@ sdkdir=$(pkg-config --variable=sdkdir xorg-server)
 
 PKG_CHECK_EXISTS([xorg-server >= 1.1.0],
                  [AC_DEFINE([HAVE_XORG_SERVER_1_1_0], 1,
-                 [Has version 1.1.0 or greater of the Xserver])])
+                            [Has version 1.1.0 or greater of the Xserver])])
+
+PKG_CHECK_EXISTS([xorg-server >= 1.3.99.0 xorg-server <= 1.4.0.90],
+                 [AC_DEFINE([CALL_CONVERSION_PROC], 1,
+                            [Call conversion_proc from within the driver, as
+                             Xserver doesn't])])
 
 CFLAGS="$CFLAGS $XORG_CFLAGS "' -I$(top_srcdir)/src'
 AC_SUBST([CFLAGS])
