@@ -1,3 +1,11 @@
+xserver-xorg-input-vmmouse (1:12.5.1-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+    + Disable vmmouse_scale_input_data.diff since the corresponding
+      upstream fix has been applied.
+
+ -- Brice Goglin <bgoglin@debian.org>  Wed, 28 May 2008 22:33:51 +0200
+
 xserver-xorg-input-vmmouse (1:12.4.3-2) unstable; urgency=low
 
   [ Julien Cristau ]
