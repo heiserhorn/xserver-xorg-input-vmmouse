@@ -1,3 +1,10 @@
+xserver-xorg-input-vmmouse (1:12.5.1-2) unstable; urgency=low
+
+  * Rebuild against xserver-xorg-dev 1.4.2 so that conversion_proc
+    isn't called by both the driver and the server.
+
+ -- Brice Goglin <bgoglin@debian.org>  Tue, 01 Jul 2008 20:05:02 +0200
+
 xserver-xorg-input-vmmouse (1:12.5.1-1) unstable; urgency=low
 
   * New upstream release.
