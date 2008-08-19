@@ -1180,13 +1180,8 @@ VMMousePlug(pointer	module,
 
    xf86LoaderReqSymLists(reqSymbols, NULL);
 
-   if (!Initialised) {
+   if (!Initialised)
       Initialised = TRUE;
-#ifndef REMOVE_LOADER_CHECK_MODULE_INFO
-      if (xf86LoaderCheckSymbol("xf86AddModuleInfo"))
-#endif
-	 xf86AddModuleInfo(&VMMouseInfo, module);
-   }
 
    xf86Msg(X_INFO, "VMWARE(0): VMMOUSE module was loaded\n");
    xf86AddInputDriver(&VMMOUSE, module, 0);
