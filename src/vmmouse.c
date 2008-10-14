@@ -851,11 +851,6 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 		  xf86Msg(X_INFO, "VMWARE(0): vmmouse enabled\n");
 	       }
 	    }
-#ifdef EVIOCGRAB
-	    if (ioctl(pInfo->fd, EVIOCGRAB, (void *)1))
-		xf86Msg(X_WARNING, "%s: Grab failed (%s)\n", pInfo->name,
-			strerror(errno));
-#endif
 	    xf86FlushInput(pInfo->fd);
 	    xf86AddEnabledDevice(pInfo);
 	 }
@@ -875,11 +870,6 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 	    mPriv->vmmouseAvailable = FALSE;
 	 }
 
-#ifdef EVIOCGRAB
-	 if (ioctl(pInfo->fd, EVIOCGRAB, (void *)0))
-	     xf86Msg(X_WARNING, "%s: Ungrab failed (%s)\n", pInfo->name,
-		     strerror(errno));
-#endif
 	 xf86RemoveEnabledDevice(pInfo);
 	 if (pMse->buffer) {
 	    XisbFree(pMse->buffer);
