@@ -807,10 +807,18 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
                                 );
 
       /* X valuator */
+#ifdef ABS_VALUATOR_AXES
+      xf86InitValuatorAxisStruct(device, 0, 0, 65535, 10000, 0, 10000);
+#else
       xf86InitValuatorAxisStruct(device, 0, 0, -1, 1, 0, 1);
+#endif
       xf86InitValuatorDefaults(device, 0);
       /* Y valuator */
+#ifdef ABS_VALUATOR_AXES
+      xf86InitValuatorAxisStruct(device, 1, 0, 65535, 10000, 0, 10000);
+#else
       xf86InitValuatorAxisStruct(device, 1, 0, -1, 1, 0, 1);
+#endif
       xf86InitValuatorDefaults(device, 1);
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
       xf86MotionHistoryAllocate(pInfo);

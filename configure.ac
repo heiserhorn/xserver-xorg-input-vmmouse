@@ -86,6 +86,9 @@ PKG_CHECK_EXISTS([xorg-server >= 1.3.99.0 xorg-server <= 1.4.0.90],
                  [AC_DEFINE([CALL_CONVERSION_PROC], 1,
                             [Call conversion_proc from within the driver, as
                              Xserver doesn't])])
+PKG_CHECK_EXISTS([xorg-server > 1.4.0.90],
+		 [AC_DEFINE([ABS_VALUATOR_AXES], 1,
+			    [Define absolute valuator axes])])
 
 CFLAGS="$CFLAGS $XORG_CFLAGS "' -I$(top_srcdir)/src'
 AC_SUBST([CFLAGS])
