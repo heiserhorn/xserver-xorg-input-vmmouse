@@ -1,3 +1,10 @@
+xserver-xorg-input-vmmouse (1:12.5.1-3) unstable; urgency=low
+
+  * Cherry-pick from upstream: Properly set axis range and resolution for
+    Server 1.5+ (closes: #490912).
+
+ -- Julien Cristau <jcristau@debian.org>  Sat, 18 Oct 2008 10:55:07 +0200
+
 xserver-xorg-input-vmmouse (1:12.5.1-2) unstable; urgency=low
 
   * Rebuild against xserver-xorg-dev 1.4.2 so that conversion_proc
