@@ -95,7 +95,7 @@
  */
 #define VMMOUSE_MAJOR_VERSION 12
 #define VMMOUSE_MINOR_VERSION 5
-#define VMMOUSE_PATCHLEVEL 1
+#define VMMOUSE_PATCHLEVEL 2
 #define VMMOUSE_DRIVER_VERSION \
    (VMMOUSE_MAJOR_VERSION * 65536 + VMMOUSE_MINOR_VERSION * 256 + VMMOUSE_PATCHLEVEL)
 #define VMMOUSE_DRIVER_VERSION_STRING \
@@ -675,7 +675,7 @@ MouseCommonOptions(InputInfoPtr pInfo)
    /*
     * Process option for ZAxisMapping
     */
-   s = xf86SetStrOption(pInfo->options, "ZAxisMapping", NULL);
+   s = xf86SetStrOption(pInfo->options, "ZAxisMapping", "4 5");
    if (s) {
       int b1 = 0, b2 = 0, b3 = 0, b4 = 0;
       char *msg = NULL;
