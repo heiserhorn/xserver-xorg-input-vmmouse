@@ -21012,6 +21012,18 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
 fi
+if test -n "$PKG_CONFIG" && \
+    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"xorg-server > 1.4.0.90\"") >&5
+  ($PKG_CONFIG --exists --print-errors "xorg-server > 1.4.0.90") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+
+cat >>confdefs.h <<\_ACEOF
+#define ABS_VALUATOR_AXES 1
+_ACEOF
+
+fi
 
 CFLAGS="$CFLAGS $XORG_CFLAGS "' -I$(top_srcdir)/src'
 
