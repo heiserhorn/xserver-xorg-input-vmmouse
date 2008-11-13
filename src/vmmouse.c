@@ -310,6 +310,9 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    if (!mPriv) {
       return NULL;
    }
+
+   mPriv->relative = TRUE;
+
    /*
     * try to enable vmmouse here
     */
@@ -843,8 +846,6 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 		  return FALSE;
 	       } else {
 		  mPriv->vmmouseAvailable = TRUE;
-		  VMMouseClient_RequestAbsolute();
-		  mPriv->relative = FALSE;
 		  xf86Msg(X_INFO, "VMWARE(0): vmmouse enabled\n");
 	       }
 	    }
@@ -865,6 +866,7 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 	 if( mPriv->vmmouseAvailable ) {
 	    VMMouseClient_Disable();
 	    mPriv->vmmouseAvailable = FALSE;
+            mPriv->relative = TRUE;
 	 }
 
 	 xf86RemoveEnabledDevice(pInfo);
@@ -913,6 +915,12 @@ VMMouseReadInput(InputInfoPtr pInfo)
 
    pMse = pInfo->private;
    mPriv = pMse->mousePriv;
+
+   if (mPriv->relative) {
+      VMMouseClient_RequestAbsolute();
+      mPriv->relative = FALSE;
+      xf86Msg(X_INFO, "VMWARE(0): vmmouse enable absolute mode\n");
+   }
 
    /*
     * First read the bytes in input device to clear the regular PS/2 fd so
