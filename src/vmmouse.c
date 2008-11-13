@@ -603,8 +603,7 @@ VMMousePostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy, int dz, int dw
  *
  * FlushButtons --
  *
- * 	FlushButtons -- send button up events for sanity. It is called
- *	during DEVICE_ON in VMMouseDeviceControl
+ * 	FlushButtons -- reset button states.
  *
  * Results:
  * 	None
@@ -618,18 +617,8 @@ VMMousePostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy, int dz, int dw
 static void
 FlushButtons(MouseDevPtr pMse)
 {
-
-    /* If no button down is pending xf86PostButtonEvent()
-     * will discard them. So we are on the safe side. */
-
-    int i, blocked;
-
     pMse->lastButtons = 0;
-
-    blocked = xf86BlockSIGIO ();
-    for (i = 1; i <= 5; i++)
-	xf86PostButtonEvent(pMse->device,0,i,0,0,0);
-    xf86UnblockSIGIO (blocked);
+    pMse->lastMappedButtons = 0;
 }
 
 
