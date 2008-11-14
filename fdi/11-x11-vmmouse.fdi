@@ -3,9 +3,7 @@
   <device>
     <match key="info.capabilities" contains="input.mouse">
       <match key="input.originating_device" contains="i8042_AUX_port">
-        <match key="/org/freedesktop/Hal/devices/computer:system.hardware.vendor" string="VMware, Inc.">
-          <append key="info.callouts.add" type="strlist">hal-probe-vmmouse</append>
-        </match>
+        <append key="info.callouts.add" type="strlist">hal-probe-vmmouse</append>
       </match>
     </match>
   </device>
