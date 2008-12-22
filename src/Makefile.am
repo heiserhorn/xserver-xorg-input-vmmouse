@@ -18,14 +18,12 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-SHARED_DIR = $(top_srcdir)/shared
-
 @DRIVER_NAME@_drv_la_LTLIBRARIES = @DRIVER_NAME@_drv.la
 @DRIVER_NAME@_drv_la_LDFLAGS = -module -avoid-version
-@DRIVER_NAME@_drv_la_LIBADD = $(SHARED_DIR)/lib@DRIVER_NAME@.la
+@DRIVER_NAME@_drv_la_LIBADD = $(top_builddir)/shared/lib@DRIVER_NAME@.la
 @DRIVER_NAME@_drv_ladir = @inputdir@
 
-INCLUDES = -I$(SHARED_DIR)
+INCLUDES = -I$(top_srcdir)/shared
 
 @DRIVER_NAME@_drv_la_SOURCES = @DRIVER_NAME@.c xf86OSmouse.h
                                

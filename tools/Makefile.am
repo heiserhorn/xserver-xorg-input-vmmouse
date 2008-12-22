@@ -20,11 +20,10 @@
 
 bin_PROGRAMS = @DRIVER_NAME@_detect
 
-SHARED_PATH = $(top_srcdir)/shared
-INCLUDES = -I$(SHARED_PATH)
+INCLUDES = -I$(top_srcdir)/shared
 
 @DRIVER_NAME@_detect_SOURCES = vmmouse_detect.c
-@DRIVER_NAME@_detect_LDADD = $(SHARED_PATH)/lib@DRIVER_NAME@.la
+@DRIVER_NAME@_detect_LDADD = $(top_builddir)/shared/lib@DRIVER_NAME@.la
 
 calloutsdir=$(HAL_CALLOUTS_DIR)
 callouts_SCRIPTS = hal-probe-vmmouse
@@ -32,7 +31,7 @@ callouts_SCRIPTS = hal-probe-vmmouse
 hal-probe-vmmouse:
 	sed -e 's|__BIN_PREFIX__|$(bindir)|g' \
 	    -e 's|__HAL_BIN_PREFIX__|$(HAL_BIN_DIR)|g' \
-	    < $@.in > $@
+	    < $(srcdir)/$@.in > $@
 
 EXTRA_DIST = hal-probe-vmmouse.in
 
