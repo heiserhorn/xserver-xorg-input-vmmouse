@@ -27,5 +27,5 @@ SHARED_DIR = $(top_srcdir)/shared
 
 INCLUDES = -I$(SHARED_DIR)
 
-@DRIVER_NAME@_drv_la_SOURCES = @DRIVER_NAME@.c
+@DRIVER_NAME@_drv_la_SOURCES = @DRIVER_NAME@.c xf86OSmouse.h
                                
