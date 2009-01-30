@@ -6,6 +6,8 @@ xserver-xorg-input-vmmouse (1:12.6.3-1) UNRELEASED; urgency=low
   * Run autoreconf at build time.  Build-depend on automake, libtool and
     xutils-dev.
   * Handle parallel builds.
+  * Install a detection program, a hal fdi file and a callout script for X
+    input hotplug.
 
  -- Julien Cristau <jcristau@debian.org>  Fri, 21 Mar 2008 21:32:47 +0100
 
