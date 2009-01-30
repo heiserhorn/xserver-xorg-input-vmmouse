@@ -3,6 +3,9 @@ xserver-xorg-input-vmmouse (1:12.6.3-1) UNRELEASED; urgency=low
   * New upstream release.
   * Drop patch vmmouse_scale_input_data.diff, it's been fixed upstream a while
     back.
+  * Run autoreconf at build time.  Build-depend on automake, libtool and
+    xutils-dev.
+  * Handle parallel builds.
 
  -- Julien Cristau <jcristau@debian.org>  Fri, 21 Mar 2008 21:32:47 +0100
 
