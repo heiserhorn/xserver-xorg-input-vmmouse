@@ -7,11 +7,13 @@ xserver-xorg-input-vmmouse (1:12.6.3-1) UNRELEASED; urgency=low
     xutils-dev.
   * Handle parallel builds.
   * Install a detection program, a hal fdi file and a callout script for X
-    input hotplug.
+    input hotplug.  This closes: #509053, since the vmmouse no longer needs to
+    be configured in xorg.conf.
   * Don't override the manpage suffix, it should be vmmouse(4) not
     vmmouse(4x).
   * Build against xserver 1.6 rc1.
   * Add myself to Uploaders.
+  * Add Depends on xserver-xorg-input-mouse (closes: #509458)
 
  -- Julien Cristau <jcristau@debian.org>  Fri, 21 Mar 2008 21:32:47 +0100
 
