@@ -1,12 +1,43 @@
-xserver-xorg-input-vmmouse (1:12.5.0-1) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.5.1-2) UNRELEASED; urgency=low
 
-  * New upstream release.
-  * Drop patch vmmouse_scale_input_data.diff, this should be fixed upstream
-    now.
-  * Build against xserver 1.5 rc1.
-  * Bump Standards-Version to 3.7.3.
+  * Drop patch vmmouse_scale_input_data.diff, it's been fixed upstream a while
+    back.
 
  -- Julien Cristau <jcristau@debian.org>  Fri, 21 Mar 2008 21:32:47 +0100
+
+xserver-xorg-input-vmmouse (1:12.5.1-4) unstable; urgency=low
+
+  * I need a brown paper bag; autoreconf so the patch added in -3 is actually
+    used…
+
+ -- Julien Cristau <jcristau@debian.org>  Tue, 21 Oct 2008 10:48:19 +0200
+
+xserver-xorg-input-vmmouse (1:12.5.1-3) unstable; urgency=low
+
+  * Cherry-pick from upstream: Properly set axis range and resolution for
+    Server 1.5+ (closes: #490912).
+
+ -- Julien Cristau <jcristau@debian.org>  Sat, 18 Oct 2008 10:55:07 +0200
+
+xserver-xorg-input-vmmouse (1:12.5.1-2) unstable; urgency=low
+
+  * Rebuild against xserver-xorg-dev 1.4.2 so that conversion_proc
+    isn't called by both the driver and the server.
+
+ -- Brice Goglin <bgoglin@debian.org>  Tue, 01 Jul 2008 20:05:02 +0200
+
+xserver-xorg-input-vmmouse (1:12.5.1-1) unstable; urgency=low
+
+  * New upstream release.
+    + Disable vmmouse_scale_input_data.diff since the corresponding
+      upstream fix has been applied.
+  * Bump Standards-Version to 3.7.3 (no changes).
+  * Run dpkg-shlibdeps with --warnings=6.  Drivers reference symbols from
+    /usr/bin/Xorg and other modules, and that's not a bug, so we want
+    dpkg-shlibdeps to shut up about symbols it can't find.
+    + Build-depend on dpkg-dev >= 1.14.17.
+
+ -- Brice Goglin <bgoglin@debian.org>  Wed, 28 May 2008 22:41:25 +0200
 
 xserver-xorg-input-vmmouse (1:12.4.3-2) unstable; urgency=low
 

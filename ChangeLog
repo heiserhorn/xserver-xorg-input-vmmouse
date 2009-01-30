@@ -1,3 +1,29 @@
+commit e72f4fbc61f4a0acf99a4b31f16fdebde9d339f1
+Author: Vinay Bondhugula <vinayb@vmware.com>
+Date:   Wed May 21 01:36:53 2008 -0400
+
+    Don't call conversion_proc for older Xservers
+    
+    There was a bug in the Xserver for a while when it didn't call a driver's
+    conversion_proc to convert device space coordinates to screen space. To fix
+    this, vmmouse starting calling that method (since January), but if this is done
+    on older versions of X, the conversion gets done twice.
+    
+    The fix is to add a configure check for the right versions of X and call
+    VMMouseConvertProc() only if we are compiling against an X that has the bug.
+    
+    There's some whitespace cleanup for vmmouse.c too.
+
+commit 08f6ba03b1368e23bda4d51b16e182079fe9c409
+Author: Vinay Bondhugula <vinayb@vmware.com>
+Date:   Tue Apr 22 18:53:16 2008 -0400
+
+    Compatibility with older versions of X
+    
+    - Makes the driver compile againt older versions of X (tested upto 4.3).
+    - Bump up the version number in configure.ac and the modinfo section.
+    - A couple of trivial whitespace cleanups.
+
 commit f9629096c1e0ac0e090642cf6a53674842aaf9a8
 Author: Adam Jackson <ajax@redhat.com>
 Date:   Thu Mar 20 16:53:05 2008 -0400
