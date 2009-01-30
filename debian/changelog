@@ -1,4 +1,4 @@
-xserver-xorg-input-vmmouse (1:12.6.3-1) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.3-1) experimental; urgency=low
 
   * New upstream release.
   * Drop patch vmmouse_scale_input_data.diff, it's been fixed upstream a while
@@ -15,7 +15,7 @@ xserver-xorg-input-vmmouse (1:12.6.3-1) UNRELEASED; urgency=low
   * Add myself to Uploaders.
   * Add Depends on xserver-xorg-input-mouse (closes: #509458)
 
- -- Julien Cristau <jcristau@debian.org>  Fri, 21 Mar 2008 21:32:47 +0100
+ -- Julien Cristau <jcristau@debian.org>  Fri, 30 Jan 2009 22:30:11 +0100
 
 xserver-xorg-input-vmmouse (1:12.5.1-4) unstable; urgency=low
 
