@@ -44,7 +44,7 @@ build-stamp: configure
 	cd obj-$(DEB_BUILD_GNU_TYPE) && \
 	../configure --prefix=/usr --mandir=\$${prefix}/share/man \
 	             --infodir=\$${prefix}/share/info $(confflags) \
-	             CFLAGS="$(CFLAGS)" DRIVER_MAN_SUFFIX=4x DRIVER_MAN_DIR=\$$\(mandir\)/man4
+	             CFLAGS="$(CFLAGS)"
 	cd obj-$(DEB_BUILD_GNU_TYPE) && $(MAKE)
 	>$@
 
