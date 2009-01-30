@@ -1,3 +1,167 @@
+commit bc324161680b1403e5811b3ac2b9ca679829a5c9
+Author: Peter Hutterer <peter.hutterer@who-t.net>
+Date:   Mon Dec 22 14:19:30 2008 +1000
+
+    Bump for 12.6.3 release
+
+commit 6f855ac348db34726eac68dc114563543ff0eae2
+Author: Peter Hutterer <peter.hutterer@who-t.net>
+Date:   Mon Dec 22 14:53:27 2008 +1000
+
+    Fix make distcheck allowing custom build directories.
+
+commit 7cb41b467a161461627e6abf1ea979b7058d02f0
+Author: Peter Hutterer <peter.hutterer@who-t.net>
+Date:   Mon Dec 22 14:10:38 2008 +1000
+
+    Fix build against master - add xf86OSmouse.h
+
+commit bda45dcf9fbbd42c155c7071d547d0d067429dde
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Fri Nov 14 10:52:26 2008 -0800
+
+    Bump for 12.6.2 release.
+
+commit b29b45a25b3b2db58f81e727d787c337bbd87637
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Fri Nov 14 10:24:36 2008 -0800
+
+    Revert "Narrow down the scope of what systems are checked for the vmmouse device."
+    
+    This reverts commit 93f032b80b841e1b6beeff814e8d9519e485fdef.
+    
+    I'm doing this for now because qemu (with and without kvm) provides
+    an implementation of the vmmouse device and input hotplug works there
+    right now. Later, I'll try and dig up an equivalent id check for them.
+
+commit a5718c9b31d5fb72a88c0e145766efd861e0a3d3
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Thu Nov 13 15:43:31 2008 -0800
+
+    Only turn on absolute mode when we get an actual event; we don't
+    want the driver to throw us into absolute mode just because the
+    device is present but the user has a relative input path configured.
+
+commit aea9dd5694e3b6bdeb704c18dc7930ba412ff259
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Thu Nov 13 15:21:31 2008 -0800
+
+    Don't flush buttons.
+    
+    Apply equivalent of commit 6a03e8bd9699a33dabcdd2bbcf51a001ddfd5534
+    from xf86-input-mouse.
+
+commit 93f032b80b841e1b6beeff814e8d9519e485fdef
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Mon Oct 27 09:32:22 2008 -0700
+
+    Narrow down the scope of what systems are checked for the vmmouse device.
+
+commit c42ef00eaa590139cb872c086787aaa545eac273
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Thu Oct 23 23:35:56 2008 -0700
+
+    Bump for 12.6.1 release.
+
+commit bcdec3d0cd4434770cd841c33c030e0d7203881f
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Thu Oct 23 23:35:28 2008 -0700
+
+    Remove call to iopl(). It's not portable and isn't necessary.
+
+commit ecb2f313292b4d3f516f5d1ae5c7cde45444041c
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Thu Oct 23 22:26:53 2008 -0700
+
+    Bump version number for 12.6.0 release.
+
+commit a9050a9d407f650b86ee28ff00f5717c965b4554
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Thu Oct 23 22:13:56 2008 -0700
+
+    Switch hal-probe-vmmouse to /bin/sh and add Copyright statement.
+
+commit eb03e96c1974a3fbe1c48c56974ff32bc886c8f7
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Thu Oct 23 21:54:44 2008 -0700
+
+    Add HAL integration to support input hot plug.
+    
+     * vmmouse_detect: A simple program that detects whether a vmmouse
+       device is present.
+     * hal-probe-vmmouse: A HAL callout script that uses vmmouse_detect
+       and overrides input.x11_driver.
+     * 11-x11-vmmouse.fdi: fdi descriptor that adds the callout for PS/2
+       mice.
+    
+    Additional 'configure' variables have been added to allow for overriding
+    HAL paths, although this shouldn't usually be necessary.
+
+commit 223afd09500672a7fe8a1ab5fc221001863a8bec
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Tue Oct 21 18:53:03 2008 -0700
+
+    Ignore more stuff in .gitignore
+
+commit 370a0ffa789c1c64d5343153bdb5ddccd502a361
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Tue Oct 21 18:52:02 2008 -0700
+
+    Move shared vmmouse files into a separate static lib so we can
+    share it with the vmmouse detection utility I'm about to add.
+
+commit 4c26f5cffba924daa514134e6c6dfcbc3c391d27
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Fri Oct 17 19:59:26 2008 -0700
+
+    Bump version number for 12.5.2 release.
+
+commit 305fd77bdf4a8b241c3155b068acf4147a2f8077
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Fri Oct 17 19:58:50 2008 -0700
+
+    Change ZAxisMapping default to match main mouse driver.
+
+commit 64760dae6b1184405641b6b46a7967d114f4ab80
+Author: Philip Langdale <philipl@fido2.homeip.net>
+Date:   Fri Oct 17 19:41:07 2008 -0700
+
+    Properly set axis range and resolution for Server 1.5+
+
+commit f978146de9c798e7405a7a09c5b4421e9429bf91
+Author: Matthias Hopf <mhopf@suse.de>
+Date:   Tue Oct 14 14:19:29 2008 +0200
+
+    Revert "Grab mouse from kernel if possible."
+    
+    This reverts commit 028e7d0001d4948e7b11a68d904c6b307a1ccfb3.
+    
+    The test turned out to be bogus, in fact, the patch had no effect.
+    The used kernel mouse driver doesn't even allow grabbing...
+
+commit 028e7d0001d4948e7b11a68d904c6b307a1ccfb3
+Author: Matthias Hopf <mhopf@suse.de>
+Date:   Mon Sep 29 18:30:55 2008 +0200
+
+    Grab mouse from kernel if possible.
+    
+    Avoids mouse event duplication if a mouse driver is sitting on /dev/input/mice
+    on Linux.
+
+commit a5fb5b8cb816ddcdc25a61fa42b560955a4194e3
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Tue Aug 19 15:29:38 2008 -0400
+
+    Remove useless call to xf86AddModuleInfo
+
+commit 9e4c44ab08fe8e5ad701750291970e03fc9aaf88
+Author: Jeff Smith <whydoubt@yahoo.com>
+Date:   Sun Jun 15 01:42:14 2008 -0500
+
+    Check for XINPUT ABI 3.
+    
+    Signed-off-by: Peter Hutterer <peter@cs.unisa.edu.au>
+
 commit e72f4fbc61f4a0acf99a4b31f16fdebde9d339f1
 Author: Vinay Bondhugula <vinayb@vmware.com>
 Date:   Wed May 21 01:36:53 2008 -0400

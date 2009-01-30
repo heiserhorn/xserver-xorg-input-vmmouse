@@ -1,5 +1,6 @@
-xserver-xorg-input-vmmouse (1:12.5.1-2) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.3-1) UNRELEASED; urgency=low
 
+  * New upstream release.
   * Drop patch vmmouse_scale_input_data.diff, it's been fixed upstream a while
     back.
 
