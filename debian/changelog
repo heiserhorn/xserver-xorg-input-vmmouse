@@ -1,3 +1,9 @@
+xserver-xorg-input-vmmouse (1:12.6.3-2) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Julien Cristau <jcristau@debian.org>  Thu, 09 Apr 2009 16:35:55 +0100
+
 xserver-xorg-input-vmmouse (1:12.6.3-1) experimental; urgency=low
 
   * New upstream release.
