@@ -1,3 +1,38 @@
+commit d61609868697825717d2f6a63b2a6177cb13873b
+Author: Shelley Gong <shelleygong@vmware.com>
+Date:   Mon May 11 10:08:56 2009 -0700
+
+    1) Fix bug where motion notify events were being sent with every button event.
+    
+    2) Classify relative vs. absolute packets individually rather than from a
+       global flag.
+    
+    3) Compile with older distros.
+    
+    4) Bump for 12.6.4 Release.
+    
+    Signed-off-by: Philip Langdale <philipl@fido2.homeip.net>
+
+commit d5ae42ec3849672438823b08ad06a69289ae99c5
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu May 7 15:53:32 2009 -0700
+
+    Map Solaris/Sun compiler #defines to gcc equivalents
+    
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@sun.com>
+
+commit 9719534fa3a184b848ef9e9c3a755703b8708fd2
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu Jan 15 07:29:44 2009 -0800
+
+    Make --with-hal* configure options match their help output
+
+commit 5e43144376bfa4491f60dc4da34f8bde9da2f900
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Fri Jan 9 16:23:49 2009 -0800
+
+    Remove xorgconfig & xorgcfg from See Also list in man page
+
 commit bc324161680b1403e5811b3ac2b9ca679829a5c9
 Author: Peter Hutterer <peter.hutterer@who-t.net>
 Date:   Mon Dec 22 14:19:30 2008 +1000
@@ -250,7 +285,7 @@ Date:   Mon Sep 10 21:17:12 2007 -0700
     Guard modinfo section against gcc.
 
 commit b20b4c2388a19885b8d686bbc184d69bed5585d9
-Merge: 0cd80f9... d8e1d4d...
+Merge: 0cd80f9 d8e1d4d
 Author: Philip Langdale <philipl@fido2.homeip.net>
 Date:   Mon Sep 10 20:46:13 2007 -0700
 
