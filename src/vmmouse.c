@@ -116,9 +116,6 @@ const char vm_mouse_version[] __attribute__((section(".modinfo"),unused)) =
 /*****************************************************************************
  *	static function header
  ****************************************************************************/
-#ifdef XFree86LOADER
-static const OptionInfoRec *VMMouseAvailableOptions(void *unused);
-#endif
 static InputInfoPtr VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags);
 static void VMMouseUnInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags);
 static void MouseCommonOptions(InputInfoPtr pInfo);
@@ -200,68 +197,6 @@ InputDriverRec VMMOUSE = {
    VMMouseUnInit,
    NULL,
    0
-};
-
-typedef enum {
-    OPTION_ALWAYS_CORE,
-    OPTION_SEND_CORE_EVENTS,
-    OPTION_CORE_POINTER,
-    OPTION_SEND_DRAG_EVENTS,
-    OPTION_HISTORY_SIZE,
-    OPTION_DEVICE,
-    OPTION_PROTOCOL,
-    OPTION_BUTTONS,
-    OPTION_EMULATE_3_BUTTONS,
-    OPTION_EMULATE_3_TIMEOUT,
-    OPTION_CHORD_MIDDLE,
-    OPTION_FLIP_XY,
-    OPTION_INV_X,
-    OPTION_INV_Y,
-    OPTION_ANGLE_OFFSET,
-    OPTION_Z_AXIS_MAPPING,
-    OPTION_SAMPLE_RATE,
-    OPTION_RESOLUTION,
-    OPTION_EMULATE_WHEEL,
-    OPTION_EMU_WHEEL_BUTTON,
-    OPTION_EMU_WHEEL_INERTIA,
-    OPTION_X_AXIS_MAPPING,
-    OPTION_Y_AXIS_MAPPING,
-    OPTION_AUTO_SOFT,
-    OPTION_DRAGLOCKBUTTONS
-} MouseOpts;
-
-/*
- * Define the acceptable mouse options
- * Currently not all of those options are supported
- *
- */
-static const OptionInfoRec mouseOptions[] = {
-    { OPTION_ALWAYS_CORE,	"AlwaysCore",	  OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_SEND_CORE_EVENTS,	"SendCoreEvents", OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_CORE_POINTER,	"CorePointer",	  OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_SEND_DRAG_EVENTS,	"SendDragEvents", OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_HISTORY_SIZE,	"HistorySize",	  OPTV_INTEGER,	{0}, FALSE },
-    { OPTION_DEVICE,		"Device",	  OPTV_STRING,	{0}, FALSE },
-    { OPTION_PROTOCOL,		"Protocol",	  OPTV_STRING,	{0}, FALSE },
-    { OPTION_BUTTONS,		"Buttons",	  OPTV_INTEGER,	{0}, FALSE },
-    { OPTION_EMULATE_3_BUTTONS,	"Emulate3Buttons",OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_EMULATE_3_TIMEOUT,	"Emulate3Timeout",OPTV_INTEGER,	{0}, FALSE },
-    { OPTION_CHORD_MIDDLE,	"ChordMiddle",	  OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_FLIP_XY,		"FlipXY",	  OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_INV_X,		"InvX",		  OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_INV_Y,		"InvY",		  OPTV_BOOLEAN,	{0}, FALSE },
-    { OPTION_ANGLE_OFFSET,	"AngleOffset",	  OPTV_INTEGER,	{0}, FALSE },
-    { OPTION_Z_AXIS_MAPPING,	"ZAxisMapping",	  OPTV_STRING,	{0}, FALSE },
-    { OPTION_SAMPLE_RATE,	"SampleRate",	  OPTV_INTEGER,	{0}, FALSE },
-    { OPTION_RESOLUTION,	"Resolution",	  OPTV_INTEGER,	{0}, FALSE },
-    { OPTION_EMULATE_WHEEL,	"EmulateWheel",	  OPTV_BOOLEAN, {0}, FALSE },
-    { OPTION_EMU_WHEEL_BUTTON,	"EmulateWheelButton", OPTV_INTEGER, {0}, FALSE },
-    { OPTION_EMU_WHEEL_INERTIA,	"EmulateWheelInertia", OPTV_INTEGER, {0}, FALSE },
-    { OPTION_X_AXIS_MAPPING,	"XAxisMapping",	  OPTV_STRING,	{0}, FALSE },
-    { OPTION_Y_AXIS_MAPPING,	"YAxisMapping",	  OPTV_STRING,	{0}, FALSE },
-    { OPTION_AUTO_SOFT,		"AutoSoft",	  OPTV_BOOLEAN, {0}, FALSE },
-    { OPTION_DRAGLOCKBUTTONS,	"DragLockButtons",OPTV_STRING,	{0}, FALSE },
-    { -1,			NULL,		  OPTV_NONE,	{0}, FALSE }
 };
 
 static char reverseMap[32] = { 0,  4,  2,  6,  1,  5,  3,  7,
@@ -415,14 +350,6 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    pInfo->flags |= XI86_CONFIGURED;
    return pInfo;
 }
-
-#ifdef XFree86LOADER
-static const OptionInfoRec *
-VMMouseAvailableOptions(void *unused)
-{
-    return (mouseOptions);
-}
-#endif
 
 
 /*
@@ -1146,14 +1073,6 @@ VMMouseConvertProc(InputInfoPtr pInfo, int first, int num, int v0, int v1, int v
 
 
 #ifdef XFree86LOADER
-ModuleInfoRec VMMouseInfo = {
-    1,
-    "VMMOUSE",
-    NULL,
-    0,
-    VMMouseAvailableOptions,
-};
-
 
 /*
  *----------------------------------------------------------------------
