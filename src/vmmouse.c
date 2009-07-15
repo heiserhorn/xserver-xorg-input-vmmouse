@@ -68,6 +68,10 @@
 #include "xf86OSmouse.h"
 #include "compiler.h"
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+#include <xserver-properties.h>
+#endif
+
 #include "xisb.h"
 #include "mipointer.h"
 
@@ -708,6 +712,10 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
    VMMousePrivPtr mPriv;
    unsigned char map[MSE_MAXBUTTONS + 1];
    int i;
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+   Atom btn_labels[MSE_MAXBUTTONS] = {0};
+   Atom axes_labels[2] = { 0, 0 };
+#endif
 
    pInfo = device->public.devicePrivate;
    pMse = pInfo->private;
@@ -723,9 +731,30 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
        */
       for (i = 0; i < MSE_MAXBUTTONS; i++)
 	 map[i + 1] = i + 1;
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+      btn_labels[0] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_LEFT);
+      btn_labels[1] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_MIDDLE);
+      btn_labels[2] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_RIGHT);
+      btn_labels[4] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_WHEEL_UP);
+      btn_labels[5] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_WHEEL_DOWN);
+      btn_labels[6] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_HWHEEL_LEFT);
+      btn_labels[7] = XIGetKnownProperty(BTN_LABEL_PROP_BTN_HWHEEL_RIGHT);
+      /* other buttons are unknown */
+
+#ifdef ABS_VALUATOR_AXES
+      axes_labels[0] = XIGetKnownProperty(AXIS_LABEL_PROP_ABS_X);
+      axes_labels[1] = XIGetKnownProperty(AXIS_LABEL_PROP_ABS_Y);
+#else
+      axes_labels[0] = XIGetKnownProperty(AXIS_LABEL_PROP_REL_X);
+      axes_labels[1] = XIGetKnownProperty(AXIS_LABEL_PROP_REL_Y);
+#endif /* ABS_VALUATOR_AXES */
+#endif
 
       InitPointerDeviceStruct((DevicePtr)device, map,
 			      min(pMse->buttons, MSE_MAXBUTTONS),
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+				btn_labels,
+#endif
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
 				miPointerGetMotionEvents,
 #elif GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 3
@@ -737,20 +766,39 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 #else
                                 GetMotionHistorySize(), 2
 #endif
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+				, axes_labels
+#endif
                                 );
 
       /* X valuator */
 #ifdef ABS_VALUATOR_AXES
-      xf86InitValuatorAxisStruct(device, 0, 0, 65535, 10000, 0, 10000);
+      xf86InitValuatorAxisStruct(device, 0,
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+				axes_labels[0],
+#endif
+				0, 65535, 10000, 0, 10000);
 #else
-      xf86InitValuatorAxisStruct(device, 0, 0, -1, 1, 0, 1);
+      xf86InitValuatorAxisStruct(device, 0,
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+				axes_labels[0],
+#endif
+				0, -1, 1, 0, 1);
 #endif
       xf86InitValuatorDefaults(device, 0);
       /* Y valuator */
 #ifdef ABS_VALUATOR_AXES
-      xf86InitValuatorAxisStruct(device, 1, 0, 65535, 10000, 0, 10000);
+      xf86InitValuatorAxisStruct(device, 1,
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+				axes_labels[1],
+#endif
+				0, 65535, 10000, 0, 10000);
 #else
-      xf86InitValuatorAxisStruct(device, 1, 0, -1, 1, 0, 1);
+      xf86InitValuatorAxisStruct(device, 1,
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
+				axes_labels[1],
+#endif
+				0, -1, 1, 0, 1);
 #endif
       xf86InitValuatorDefaults(device, 1);
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
