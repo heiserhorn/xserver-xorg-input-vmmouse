@@ -95,7 +95,7 @@
  */
 #define VMMOUSE_MAJOR_VERSION 12
 #define VMMOUSE_MINOR_VERSION 6
-#define VMMOUSE_PATCHLEVEL 4
+#define VMMOUSE_PATCHLEVEL 5
 #define VMMOUSE_DRIVER_VERSION \
    (VMMOUSE_MAJOR_VERSION * 65536 + VMMOUSE_MINOR_VERSION * 256 + VMMOUSE_PATCHLEVEL)
 #define VMMOUSE_DRIVER_VERSION_STRING \
@@ -232,6 +232,9 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    InputInfoPtr pInfo;
    MouseDevPtr pMse;
    VMMousePrivPtr mPriv;
+
+#ifndef NO_MOUSE_MODULE
+{
    OSMouseInfoPtr osInfo = NULL;
 
    /*
@@ -240,6 +243,8 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    osInfo = xf86OSMouseInit(0);
    if (!osInfo)
       return FALSE;
+}
+#endif
 
    mPriv = xcalloc (1, sizeof (VMMousePrivRec));
 
@@ -1121,7 +1126,6 @@ VMMousePlug(pointer	module,
 	    int		*errmin)
 {
    static Bool Initialised = FALSE;
-   char *name;
 
    xf86LoaderReqSymLists(reqSymbols, NULL);
 
@@ -1131,6 +1135,9 @@ VMMousePlug(pointer	module,
    xf86Msg(X_INFO, "VMWARE(0): VMMOUSE module was loaded\n");
    xf86AddInputDriver(&VMMOUSE, module, 0);
 
+#ifndef NO_MOUSE_MODULE
+{
+   char *name;
    /*
     * Load the normal mouse module as submodule
     * If we fail in PreInit later, this allows us to fall back to normal mouse module
@@ -1146,6 +1153,8 @@ VMMousePlug(pointer	module,
       LoaderErrorMsg(NULL, name, *errmaj, *errmin);
    }
    xfree(name);
+}
+#endif
 
    return module;
 }
