@@ -1175,7 +1175,7 @@ static XF86ModuleVersionInfo VMMouseVersionRec = {
 /*
  * The variable contains the necessary information to load and initialize the module
  */
-XF86ModuleData vmmouseModuleData = {
+_X_EXPORT XF86ModuleData vmmouseModuleData = {
    &VMMouseVersionRec,
    VMMousePlug,
    VMMouseUnplug
