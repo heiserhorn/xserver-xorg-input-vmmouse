@@ -1,8 +1,9 @@
 xserver-xorg-input-vmmouse (1:12.6.5-1) UNRELEASED; urgency=low
 
   * New upstream release.
+  * Bump Standards-Version to 3.8.3 now that we have README.source.
 
- -- Brice Goglin <bgoglin@debian.org>  Fri, 04 Sep 2009 13:49:41 +0200
+ -- Brice Goglin <bgoglin@debian.org>  Fri, 04 Sep 2009 14:28:48 +0200
 
 xserver-xorg-input-vmmouse (1:12.6.4-1) unstable; urgency=low
 
