@@ -1,3 +1,43 @@
+commit 989004f300c9fd897837fdee4fd9c1307c6ed6ca
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Thu Jul 16 09:57:27 2009 +1000
+
+    Compile with INPUT ABI 7.
+    
+    Button labels up to 7 are essentially default so we can assume they are the
+    usual ones. Beyond that, they are anyone's guess.
+    Axis labels are X/Y.
+    
+    Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+
+commit 2fd8646ff528f4f7c4450dff111b4e9335ae2186
+Author: Peter Hutterer <peter.hutterer@who-t.net>
+Date:   Wed Jul 29 11:21:19 2009 -0700
+
+    Needed by newer X servers, otherwise the module data is invisible and a dlopen error occurs.
+    
+    Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+
+commit 436582791de540ef85b0b66000f2446d6f8f9802
+Author: Shelley Gong <shelleygong@vmware.com>
+Date:   Wed Jul 29 11:12:24 2009 -0700
+
+    Turn off built-in fallback-to-mouse-driver mechanism. With input
+    hotplug, HAL handles deciding which driver to use and the presence
+    of mouse_drv can't be assumed anymore on modern distros.
+
+commit 370aab66b97a6fdc18f87d584a252f33f575899e
+Author: Matthias Hopf <mhopf@suse.de>
+Date:   Fri Jun 5 20:06:40 2009 +0200
+
+    Remove ModuleInfoRec and associated bits.
+    
+    ModuleInfoRec was removed with 2107becb0ce2ffda001be65728c53563496d8d50 from
+    the server. The MouseOpts were only used from the ModuleInfoRec, they're gone
+    now too.
+    
+    Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+
 commit d61609868697825717d2f6a63b2a6177cb13873b
 Author: Shelley Gong <shelleygong@vmware.com>
 Date:   Mon May 11 10:08:56 2009 -0700

@@ -1,3 +1,9 @@
+xserver-xorg-input-vmmouse (1:12.6.5-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+
+ -- Brice Goglin <bgoglin@debian.org>  Fri, 04 Sep 2009 13:49:41 +0200
+
 xserver-xorg-input-vmmouse (1:12.6.4-1) unstable; urgency=low
 
   * New upstream release.
