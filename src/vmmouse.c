@@ -146,6 +146,7 @@ typedef struct {
    Bool                absoluteRequested;
 } VMMousePrivRec, *VMMousePrivPtr;
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 7
 static const char *reqSymbols[] = {
    "InitPointerDeviceStruct",
    "LoaderSymbol",
@@ -192,6 +193,7 @@ static const char *reqSymbols[] = {
    "Xstrdup",
    NULL
 };
+#endif
 
 InputDriverRec VMMOUSE = {
    1,
@@ -1175,7 +1177,9 @@ VMMousePlug(pointer	module,
 {
    static Bool Initialised = FALSE;
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 7
    xf86LoaderReqSymLists(reqSymbols, NULL);
+#endif
 
    if (!Initialised)
       Initialised = TRUE;
