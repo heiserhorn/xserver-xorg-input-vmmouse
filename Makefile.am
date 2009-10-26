@@ -20,3 +20,9 @@
 
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = shared src tools fdi man
+.PHONY: ChangeLog
+
+ChangeLog:
+	$(CHANGELOG_CMD)
+
+dist-hook: ChangeLog
