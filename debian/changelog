@@ -1,6 +1,11 @@
 xserver-xorg-input-vmmouse (1:12.6.5-2) UNRELEASED; urgency=low
 
+  [ Timo Aaltonen ]
   * Build against Xserver 1.7.
+
+  [ Julien Cristau ]
+  * Rename the build directory to not include DEB_BUILD_GNU_TYPE for no
+    good reason.  Thanks, Colin Watson!
 
  -- Timo Aaltonen <tjaalton@ubuntu.com>  Sat, 05 Dec 2009 02:06:47 +0200
 
