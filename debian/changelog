@@ -1,14 +1,20 @@
-xserver-xorg-input-vmmouse (1:12.6.5-2) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.5-3) UNRELEASED; urgency=low
 
-  [ Timo Aaltonen ]
-  * Build against Xserver 1.7.
-
-  [ Julien Cristau ]
   * Rename the build directory to not include DEB_BUILD_GNU_TYPE for no
     good reason.  Thanks, Colin Watson!
   * Remove myself from Uploaders
 
- -- Timo Aaltonen <tjaalton@ubuntu.com>  Sat, 05 Dec 2009 02:06:47 +0200
+ -- Julien Cristau <jcristau@debian.org>  Sat, 23 Jan 2010 02:30:58 +0100
+
+xserver-xorg-input-vmmouse (1:12.6.5-2) experimental; urgency=low
+
+  [ Timo Aaltonen ]
+  * Build against Xserver 1.7.
+
+  [ Cyril Brulebois ]
+  * Upload to experimental.
+
+ -- Cyril Brulebois <kibi@debian.org>  Sat, 05 Dec 2009 23:20:15 +0100
 
 xserver-xorg-input-vmmouse (1:12.6.5-1) unstable; urgency=low
 
