@@ -1,8 +1,14 @@
 xserver-xorg-input-vmmouse (1:12.6.5-3) UNRELEASED; urgency=low
 
+  [ Julien Cristau ]
   * Rename the build directory to not include DEB_BUILD_GNU_TYPE for no
     good reason.  Thanks, Colin Watson!
   * Remove myself from Uploaders
+
+  [ Brice Goglin ]
+  * Pull from upstream master branch up to commit aca67eca.
+    + Stop using xf86LoaderReqSymLists since it was removed from the
+      server, closes: #568403.
 
  -- Julien Cristau <jcristau@debian.org>  Sat, 23 Jan 2010 02:30:58 +0100
 
