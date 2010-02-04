@@ -1,4 +1,4 @@
-xserver-xorg-input-vmmouse (1:12.6.5-3) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.5-3) unstable; urgency=low
 
   [ Julien Cristau ]
   * Rename the build directory to not include DEB_BUILD_GNU_TYPE for no
@@ -10,7 +10,7 @@ xserver-xorg-input-vmmouse (1:12.6.5-3) UNRELEASED; urgency=low
     + Stop using xf86LoaderReqSymLists since it was removed from the
       server, closes: #568403.
 
- -- Julien Cristau <jcristau@debian.org>  Sat, 23 Jan 2010 02:30:58 +0100
+ -- Brice Goglin <bgoglin@debian.org>  Thu, 04 Feb 2010 19:39:57 +0100
 
 xserver-xorg-input-vmmouse (1:12.6.5-2) experimental; urgency=low
 
