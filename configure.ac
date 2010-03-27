@@ -47,6 +47,7 @@ AM_CONFIG_HEADER([config.h])
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 AC_PROG_CC
+AC_PROG_SED
 
 AH_TOP([#include "xorg-server.h"])
 
