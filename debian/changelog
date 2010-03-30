@@ -1,4 +1,4 @@
-xserver-xorg-input-vmmouse (1:12.6.5-4) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.5-4) unstable; urgency=low
 
   * Add 10-vmmouse.conf.
   * Add 69-xorg-vmmouse.rules, needed to set ID_INPUT.tags.
@@ -6,7 +6,7 @@ xserver-xorg-input-vmmouse (1:12.6.5-4) UNRELEASED; urgency=low
   * Don't install the hal fdi anymore, it's obsolete.
   * Run udevadm trigger on postinst, and depend on udev.
 
- -- Timo Aaltonen <tjaalton@ubuntu.com>  Tue, 30 Mar 2010 16:01:35 +0300
+ -- Timo Aaltonen <tjaalton@ubuntu.com>  Tue, 30 Mar 2010 21:56:42 +0300
 
 xserver-xorg-input-vmmouse (1:12.6.5-3) unstable; urgency=low
 
