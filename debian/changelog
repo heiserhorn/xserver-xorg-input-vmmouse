@@ -4,6 +4,7 @@ xserver-xorg-input-vmmouse (1:12.6.5-4) UNRELEASED; urgency=low
   * Add 69-xorg-vmmouse.rules, needed to set ID_INPUT.tags.
   * Add 01-enable-detect-in-kvm.diff, closes #525039.
   * Don't install the hal fdi anymore, it's obsolete.
+  * Run udevadm trigger on postinst, and depend on udev.
 
  -- Timo Aaltonen <tjaalton@ubuntu.com>  Tue, 30 Mar 2010 16:01:35 +0300
 

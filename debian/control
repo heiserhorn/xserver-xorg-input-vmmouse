@@ -21,7 +21,9 @@ Vcs-Browser: http://git.debian.org/?p=pkg-xorg/driver/xserver-xorg-input-vmmouse
 
 Package: xserver-xorg-input-vmmouse
 Architecture: i386 amd64
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${xserver:Depends}, xserver-xorg-input-mouse
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${xserver:Depends},
+ xserver-xorg-input-mouse,
+ udev
 Provides: ${xinpdriver:Provides}
 Replaces: xserver-xorg (<< 6.8.2-35)
 Description: X.Org X server -- VMMouse input driver to use with VMWare
