@@ -1,6 +1,7 @@
 xserver-xorg-input-vmmouse (1:12.6.5-4) UNRELEASED; urgency=low
 
   * Add 10-vmmouse.conf.
+  * Add 69-xorg-vmmouse.rules, needed to set ID_INPUT.tags.
 
  -- Timo Aaltonen <tjaalton@ubuntu.com>  Tue, 30 Mar 2010 16:01:35 +0300
 
