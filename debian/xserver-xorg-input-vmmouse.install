@@ -2,4 +2,3 @@ usr/lib/xorg/modules/input/*.so
 usr/bin/vmmouse_detect
 usr/lib/hal/hal-probe-vmmouse
 usr/share/man
-usr/share/hal/fdi/policy/20thirdparty/*
