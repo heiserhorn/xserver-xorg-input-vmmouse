@@ -36,3 +36,23 @@ hal-probe-vmmouse: hal-probe-vmmouse.in
 EXTRA_DIST = hal-probe-vmmouse.in
 
 CLEANFILES = hal-probe-vmmouse
+
+if HAS_XORG_CONF_DIR
+
+confdir=$(XORG_CONF_DIR)
+dist_conf_DATA = 50-vmmouse.conf
+
+endif
+
+if HAS_UDEV_RULES_DIR
+
+udevdir=$(UDEV_RULES_DIR)
+udev_DATA = 69-xorg-vmmouse.rules
+
+$(udev_DATA): $(udev_DATA).in
+	sed -e 's|__BIN_PREFIX__|$(bindir)|g' < $< > $@
+
+EXTRA_DIST += $(udev_DATA).in
+CLEANFILES += $(udev_DATA)
+
+endif # HAS_UDEV_RULES_DIR

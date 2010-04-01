@@ -18,6 +18,9 @@
 #  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+# Ensure xorg.conf.d snippets are installed below $(prefix) for distcheck
+DISTCHECK_CONFIGURE_FLAGS = --with-xorg-conf-dir='$${datadir}/X11/xorg.conf.d'
+
 SUBDIRS = shared src tools fdi man
 MAINTAINERCLEANFILES = ChangeLog INSTALL
 .PHONY: ChangeLog INSTALL
