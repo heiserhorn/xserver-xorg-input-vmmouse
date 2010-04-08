@@ -28,10 +28,10 @@ INCLUDES = -I$(top_srcdir)/shared
 calloutsdir=$(HAL_CALLOUTS_DIR)
 callouts_SCRIPTS = hal-probe-vmmouse
 
-hal-probe-vmmouse:
+hal-probe-vmmouse: hal-probe-vmmouse.in
 	sed -e 's|__BIN_PREFIX__|$(bindir)|g' \
 	    -e 's|__HAL_BIN_PREFIX__|$(HAL_BIN_DIR)|g' \
-	    < $(srcdir)/$@.in > $@
+	    < $< > $@
 
 EXTRA_DIST = hal-probe-vmmouse.in
 
