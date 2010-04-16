@@ -70,6 +70,7 @@
 
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
 #include <xserver-properties.h>
+#include "exevents.h"
 #endif
 
 #include "xisb.h"
