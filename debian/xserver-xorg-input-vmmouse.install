@@ -2,3 +2,5 @@ usr/lib/xorg/modules/input/*.so
 usr/bin/vmmouse_detect
 usr/lib/hal/hal-probe-vmmouse
 usr/share/man
+usr/share/X11/xorg.conf.d
+lib/udev/rules.d
