@@ -1,3 +1,0 @@
-#		Add & Override for this directory and it's subdirectories
-# Override default pattern *.[0-9] from top level .gitignore
-!vmmouse_detect.1

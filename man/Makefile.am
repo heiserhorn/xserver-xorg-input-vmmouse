@@ -21,19 +21,19 @@
 # DEALINGS IN THE SOFTWARE.
 # 
 
-man_MANS = @DRIVER_NAME@_detect.1
-
 drivermandir = $(DRIVER_MAN_DIR)
 
 driverman_PRE = @DRIVER_NAME@.man
 
 driverman_DATA = $(driverman_PRE:man=@DRIVER_MAN_SUFFIX@)
 
-EXTRA_DIST = @DRIVER_NAME@.man @DRIVER_NAME@_detect.1
+appmandir = $(APP_MAN_DIR)
+appman_PRE = @DRIVER_NAME@_detect.man
+appman_DATA = $(appman_PRE:man=@APP_MAN_SUFFIX@)
 
-CLEANFILES = $(driverman_DATA)
+EXTRA_DIST = @DRIVER_NAME@.man $(appman_PRE)
 
-SED = sed
+CLEANFILES = $(driverman_DATA) $(appman_DATA)
 
 # Strings to replace in man pages
 XORGRELSTRING = @PACKAGE_STRING@
@@ -54,4 +54,6 @@ MAN_SUBSTS = \
 SUFFIXES = .$(DRIVER_MAN_SUFFIX) .man
 
 .man.$(DRIVER_MAN_SUFFIX):
-	sed $(MAN_SUBSTS) < $< > $@
+	$(AM_V_GEN)$(SED) $(MAN_SUBSTS) < $< > $@
+.man.$(APP_MAN_SUFFIX):
+	$(AM_V_GEN)$(SED) $(MAN_SUBSTS) < $< > $@

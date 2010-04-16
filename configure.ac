@@ -22,7 +22,7 @@
 
 AC_PREREQ(2.57)
 AC_INIT([xf86-input-vmmouse],
-        12.6.5,
+        12.6.9,
         [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
         xf86-input-vmmouse)
 
@@ -34,8 +34,8 @@ AM_MAINTAINER_MODE
 
 # Require xorg-macros: XORG_DEFAULT_OPTIONS
 m4_ifndef([XORG_MACROS_VERSION],
-          [m4_fatal([must install xorg-macros 1.3 or later before running autoconf/autogen])])
-XORG_MACROS_VERSION(1.3)
+          [m4_fatal([must install xorg-macros 1.4 or later before running autoconf/autogen])])
+XORG_MACROS_VERSION(1.4)
 XORG_DEFAULT_OPTIONS
 
 DRIVER_NAME=vmmouse
@@ -47,6 +47,7 @@ AM_CONFIG_HEADER([config.h])
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
 AC_PROG_CC
+AC_PROG_SED
 
 AH_TOP([#include "xorg-server.h"])
 
@@ -57,6 +58,14 @@ AC_ARG_WITH(xorg-module-dir,
             [moduledir="$libdir/xorg/modules"])
 inputdir=${moduledir}/input
 AC_SUBST(inputdir)
+
+AC_ARG_WITH(xorg-conf-dir,
+            AC_HELP_STRING([--with-xorg-conf-dir=DIR],
+                           [Default xorg.conf.d directory [[default=from $PKG_CONFIG xorg-server]]]),
+            [XORG_CONF_DIR="$withval"],
+            [XORG_CONF_DIR="`$PKG_CONFIG --variable=sysconfigdir xorg-server`"])
+AC_SUBST(XORG_CONF_DIR)
+AM_CONDITIONAL(HAS_XORG_CONF_DIR, [test "x$XORG_CONF_DIR" != "x" && test "x$XORG_CONF_DIR" != "xno"])
 
 AC_ARG_WITH(hal-bin-dir,
 	    AC_HELP_STRING([--with-hal-bin-dir=DIR],
@@ -83,6 +92,29 @@ AC_ARG_WITH(hal-fdi-dir,
 	    [halfdidir="$datadir/hal/fdi/policy/20thirdparty"])
 HAL_FDI_DIR=${halfdidir}
 AC_SUBST(HAL_FDI_DIR)
+
+case $host_os in
+  linux*)
+    if test "x$prefix" = "xNONE" -o "x$prefix" = "x/usr" -o "x$prefix" = "x/usr/local" ; then
+      slashlibdir=/lib
+    else
+      slashlibdir=$prefix/lib
+    fi
+    UDEV_RULES_DIR=$slashlibdir/udev/rules.d
+    ;;
+  *)
+    UDEV_RULES_DIR=no
+    ;;
+esac
+
+AC_ARG_WITH(udev-rules-dir,
+	    AC_HELP_STRING([--with-udev-rules-dir=DIR],
+			   [Default udev rules.d directory
+			    [[default=($prefix)/lib/udev/rules.d on Linux, none otherwise]]]),
+	    [UDEV_RULES_DIR="$withval"],
+	    [])
+AC_SUBST(UDEV_RULES_DIR)
+AM_CONDITIONAL(HAS_UDEV_RULES_DIR, [test "x$UDEV_RULES_DIR" != "xno"])
 
 # Checks for extensions
 XORG_DRIVER_CHECK_EXT(RANDR, randrproto)
