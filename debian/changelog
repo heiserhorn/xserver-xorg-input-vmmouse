@@ -2,6 +2,7 @@ xserver-xorg-input-vmmouse (1:12.6.9-1) UNRELEASED; urgency=low
 
   * New upstream release
     - Adds InputClass support
+  * Drop our local udev rules and xorg.conf.d snippet, they're upstream now.
 
  -- Julien Cristau <jcristau@debian.org>  Sat, 17 Apr 2010 01:11:13 +0200
 
