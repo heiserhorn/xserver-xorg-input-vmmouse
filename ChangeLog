@@ -1,3 +1,113 @@
+commit 01f03ca8fbca96957d6c2718f4279e31cb406c2f
+Author: Peter Hutterer <peter.hutterer@who-t.net>
+Date:   Fri Apr 9 08:30:26 2010 +1000
+
+    Bump for 12.6.9 release.
+    
+    Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+
+commit 7b2ff5322b298ed8458c7442a16b8c0a14bcc5dc
+Author: Peter Hutterer <peter.hutterer@who-t.net>
+Date:   Fri Apr 9 07:57:17 2010 +1000
+
+    man: move vmmouse_detect back to section 1
+    
+    Was moved to section 4 in commit 36c2cd8ec6d3bf7191a98a04a876e8d7b6f64d5d,
+    "man: build vmmouse_detect man page".
+    
+    Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+    Reviewed-by: Alan Coopersmith <alan.coopersmith@oracle.com>
+
+commit 21f53010d204c681e1a82b176841c2d4af8f61d8
+Author: Michel Dänzer <daenzer@vmware.com>
+Date:   Thu Apr 8 16:18:07 2010 +0200
+
+    Bump for 12.6.8 release.
+
+commit 80f671233e583ae085986bce12057fc45da444aa
+Author: Michel Dänzer <daenzer@vmware.com>
+Date:   Thu Apr 1 18:35:38 2010 +0200
+
+    Add InputClass support.
+    
+    The InputClass can match the tag "vmmouse". A sample xorg.conf.d snippet is
+    provided to try and make sure the driver will be loaded automatically in a
+    compatible VM also if the X server uses udev instead of HAL.
+    
+    The configure script tries to determine if and where it makes sense to install
+    the udev rule and xorg.conf.d snippet but allows overriding both.
+    
+    Thanks to Timo Aaltonen for the udev rules file and Dan Nicholson and Simon
+    Thum for review and suggestions for improvement.
+
+commit b9c3bc94ee86a72216e9738aaecede80cc1c043c
+Author: Michel Dänzer <daenzer@vmware.com>
+Date:   Thu Apr 8 16:09:51 2010 +0200
+
+    Improve make rule for hal-probe-vmmouse.
+    
+    Make sure changes to hal-probe-vmmouse.in get picked up automatically and
+    simplify the way it's passed to sed.
+    
+    Thanks to Dan Nicholson for the suggestion.
+
+commit 36c2cd8ec6d3bf7191a98a04a876e8d7b6f64d5d
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Fri Mar 26 20:44:23 2010 -0400
+
+    man: build vmmouse_detect man page
+    
+    The generated file was checked-in and was wrong.
+    The file suffix is now computed based on the platform
+    The macro substitution has been restored
+    
+    Reviewed-by: Dan Nicholson <dbn.lists@gmail.com>
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
+commit 27813c665b0eed0b3d8b4db5fcb555f20fe60c4a
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Sat Mar 20 13:21:12 2010 -0400
+
+    make: remove unrequired INCLUDES = -I$(srcdir)
+    
+    Already covered by DEFAULT_INCLUDES
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+    Reviewed-by: Dan Nicholson <dbn.lists@gmail.com>
+    Signed-off-by: Peter Hutterer <peter.hutterer@who-t.net>
+
+commit 40ba06b1389ab68482b3aa3ed69292011c09f9dd
+Author: Jakob Bornecrantz <jakob@vmware.com>
+Date:   Thu Mar 18 16:23:27 2010 +0100
+
+    Bump for 12.6.7 release.
+
+commit fae10ac6c613f6de847e152d615e6da421147139
+Author: Julien Cristau <jcristau@debian.org>
+Date:   Fri Feb 26 17:30:08 2010 +0100
+
+    vmmouse: don't hardcode the module version in the source
+    
+    XORG_RELEASE_VERSION gives us that info from configure.ac, let's use it.
+    
+    Signed-off-by: Julien Cristau <jcristau@debian.org>
+
+commit f3ef776415820c7da1728d1fe27dd56dc24e935f
+Author: Julien Cristau <jcristau@debian.org>
+Date:   Wed Feb 10 02:16:43 2010 +0100
+
+    Bump to 12.6.6
+    
+    Signed-off-by: Julien Cristau <jcristau@debian.org>
+
+commit ae58da22e6f4798498a1e9a0b1b6c6c0f19e2532
+Author: Julien Cristau <jcristau@debian.org>
+Date:   Wed Feb 10 02:15:38 2010 +0100
+
+    Require xorg-macros 1.4 for XORG_INSTALL
+    
+    Signed-off-by: Julien Cristau <jcristau@debian.org>
+
 commit aca67eca8bbb1368a2f36614b0e78b98947f134f
 Author: Alan Coopersmith <alan.coopersmith@sun.com>
 Date:   Fri Jan 15 15:15:54 2010 -0800
