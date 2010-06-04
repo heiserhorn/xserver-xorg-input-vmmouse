@@ -20,7 +20,7 @@
 
 bin_PROGRAMS = @DRIVER_NAME@_detect
 
-INCLUDES = -I$(top_srcdir)/shared
+AM_CPPFLAGS = -I$(top_srcdir)/shared $(XORG_CFLAGS)
 
 @DRIVER_NAME@_detect_SOURCES = vmmouse_detect.c
 @DRIVER_NAME@_detect_LDADD = $(top_builddir)/shared/lib@DRIVER_NAME@.la
