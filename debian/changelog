@@ -1,9 +1,13 @@
 xserver-xorg-input-vmmouse (1:12.6.9-2) UNRELEASED; urgency=low
 
+  [ Robert Hooker ]
   * Pull from upstream master branch up to commit 833698b3b98
     - Fixed an issue where vmmouse was matched against the non-event device
       as well causing it to load multiple times and get stuck.
   * Version build-dependency on xutils-dev as it requires util-macros 1.4.
+
+  [ Julien Cristau ]
+  * Move vmmouse_detect from /usr/bin to /bin, since the udev rule needs it.
 
  -- Robert Hooker <sarvatt@ubuntu.com>  Fri, 04 Jun 2010 03:05:36 -0400
 
