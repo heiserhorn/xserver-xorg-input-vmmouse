@@ -8,6 +8,7 @@ xserver-xorg-input-vmmouse (1:12.6.9-2) UNRELEASED; urgency=low
 
   [ Julien Cristau ]
   * Move vmmouse_detect from /usr/bin to /bin, since the udev rule needs it.
+  * Stop shipping hal-probe-vmmouse.
 
  -- Robert Hooker <sarvatt@ubuntu.com>  Fri, 04 Jun 2010 03:05:36 -0400
 
