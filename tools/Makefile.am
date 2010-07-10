@@ -29,9 +29,9 @@ calloutsdir=$(HAL_CALLOUTS_DIR)
 callouts_SCRIPTS = hal-probe-vmmouse
 
 hal-probe-vmmouse: hal-probe-vmmouse.in
-	sed -e 's|__BIN_PREFIX__|$(bindir)|g' \
+	$(AM_V_GEN)$(SED) -e 's|__BIN_PREFIX__|$(bindir)|g' \
 	    -e 's|__HAL_BIN_PREFIX__|$(HAL_BIN_DIR)|g' \
-	    < $< > $@
+	    < hal-probe-vmmouse.in > $@
 
 EXTRA_DIST = hal-probe-vmmouse.in
 
