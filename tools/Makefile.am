@@ -31,7 +31,7 @@ callouts_SCRIPTS = hal-probe-vmmouse
 hal-probe-vmmouse: hal-probe-vmmouse.in
 	$(AM_V_GEN)$(SED) -e 's|__BIN_PREFIX__|$(bindir)|g' \
 	    -e 's|__HAL_BIN_PREFIX__|$(HAL_BIN_DIR)|g' \
-	    < hal-probe-vmmouse.in > $@
+	    < $< > $@
 
 EXTRA_DIST = hal-probe-vmmouse.in
 
@@ -52,7 +52,8 @@ udev_DATA = 69-xorg-vmmouse.rules
 $(udev_DATA): $(udev_DATA).in
 	sed -e 's|__BIN_PREFIX__|$(bindir)|g' < $< > $@
 
-EXTRA_DIST += $(udev_DATA).in
 CLEANFILES += $(udev_DATA)
 
 endif # HAS_UDEV_RULES_DIR
+
+EXTRA_DIST = $(udev_DATA).in hal-probe-vmmouse.in
