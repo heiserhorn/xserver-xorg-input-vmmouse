@@ -1,8 +1,8 @@
-xserver-xorg-input-vmmouse (1:12.6.9-3) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.9-3) experimental; urgency=low
 
   * Build against Xserver 1.9.1 rc1.
 
- -- Cyril Brulebois <kibi@debian.org>  Wed, 13 Oct 2010 01:22:18 +0200
+ -- Cyril Brulebois <kibi@debian.org>  Wed, 13 Oct 2010 01:22:34 +0200
 
 xserver-xorg-input-vmmouse (1:12.6.9-2) unstable; urgency=low
 
