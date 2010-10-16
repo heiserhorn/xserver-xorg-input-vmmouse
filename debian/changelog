@@ -1,8 +1,8 @@
-xserver-xorg-input-vmmouse (1:12.6.9-4) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.9-4) experimental; urgency=low
 
   * Merge xsfbs to get unversioned Provides.
 
- -- Cyril Brulebois <kibi@debian.org>  Sat, 16 Oct 2010 15:00:27 +0200
+ -- Cyril Brulebois <kibi@debian.org>  Sat, 16 Oct 2010 15:00:44 +0200
 
 xserver-xorg-input-vmmouse (1:12.6.9-3) experimental; urgency=low
 
