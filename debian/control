@@ -1,0 +1,44 @@
+Source: xserver-xorg-input-vmmouse
+Section: x11
+Priority: optional
+Maintainer: Debian X Strike Force <debian-x@lists.debian.org>
+Uploaders: David Nusinow <dnusinow@debian.org>, Drew Parsons <dparsons@debian.org>, Brice Goglin <bgoglin@debian.org>, Cyril Brulebois <kibi@debian.org>
+Build-Depends:
+ debhelper (>= 5),
+ pkg-config,
+ xserver-xorg-dev (>= 2:1.9.0.901),
+ x11proto-input-dev,
+ x11proto-core-dev,
+ x11proto-randr-dev,
+ quilt,
+ dpkg-dev (>= 1.14.17),
+ automake,
+ libtool,
+ xutils-dev (>= 1:7.5+1)
+Standards-Version: 3.8.4
+Vcs-Git: git://git.debian.org/git/pkg-xorg/driver/xserver-xorg-input-vmmouse
+Vcs-Browser: http://git.debian.org/?p=pkg-xorg/driver/xserver-xorg-input-vmmouse.git
+
+Package: xserver-xorg-input-vmmouse
+Architecture: i386 amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${xinpdriver:Depends},
+ xserver-xorg-input-mouse,
+ udev
+Provides: ${xinpdriver:Provides}
+Replaces: xserver-xorg (<< 6.8.2-35)
+Description: X.Org X server -- VMMouse input driver to use with VMWare
+ This package provides the driver for the X11 vmmouse input device.
+ .
+ The VMMouse driver enables support for the special VMMouse protocol
+ that is provided by VMware virtual machines to give absolute pointer
+ positioning.
+ .
+ The vmmouse driver is capable of falling back to the standard "mouse"
+ driver if a VMware virtual machine is not detected. This allows for
+ dual-booting of an operating system from a virtual machine to real hardware
+ without having to edit xorg.conf every time.
+ .
+ More information about X.Org can be found at:
+ <URL:http://www.X.org>
+ .
+ This package is built from the X.org xf86-input-vmmouse driver module.
