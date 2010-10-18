@@ -1,3 +1,47 @@
+commit adc177e3af9dc5da982ceb7a93e9c5e3bc6aed59
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Tue Aug 10 10:36:33 2010 -0400
+
+    xf86-input-vmmouse 12.6.10
+    
+    Signed-off-by: Adam Jackson <ajax@redhat.com>
+
+commit cc76aec9b712403c777b7ce1290fa1e7ca62bf8c
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Tue Aug 10 10:36:21 2010 -0400
+
+    Fix distcheck
+
+commit 61608b87c01ce87bd29869c1554a2ade5998782c
+Author: Alan Coopersmith <alan.coopersmith@oracle.com>
+Date:   Fri Jul 9 20:45:53 2010 -0700
+
+    Improve Solaris compatibility of hal-probe-vmmouse generation rule
+    
+    Use $(SED) from AC_PROG_SED to ensure a good version of sed is found
+    Use explicit input file name instead of $< to workaround Solaris make
+    issue with $< in explicit rules.
+    
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@oracle.com>
+
+commit d7700bed84f6632913a6590cc9cc9d10b815a08c
+Author: Fernando Carrijo <fcarrijo@yahoo.com.br>
+Date:   Thu Jul 1 07:14:14 2010 -0300
+
+    Purge macro NEED_EVENTS
+    
+    Signed-off-by: Fernando Carrijo <fcarrijo@yahoo.com.br>
+    Acked-by: Tiago Vignatti <tiago.vignatti@nokia.com>
+    Reviewed-by: Alan Coopersmith <alan.coopersmith@oracle.com>
+
+commit 4e3bf19d2637cb034e31611ef184348f12677e81
+Author: Gaetan Nadon <memsize@videotron.ca>
+Date:   Sat Jun 12 10:09:48 2010 -0400
+
+    COPYING: update and refactor Copyright notices
+    
+    Signed-off-by: Gaetan Nadon <memsize@videotron.ca>
+
 commit 833698b3b9857fda176c91a0dbb128275a174624
 Author: Gaetan Nadon <memsize@videotron.ca>
 Date:   Sun Apr 25 19:36:19 2010 -0400
