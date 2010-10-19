@@ -203,8 +203,11 @@ InputDriverRec VMMOUSE = {
    NULL,
    VMMousePreInit,
    VMMouseUnInit,
-   NULL,
+   NULL
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 11
+       ,
    0
+#endif
 };
 
 static char reverseMap[32] = { 0,  4,  2,  6,  1,  5,  3,  7,
