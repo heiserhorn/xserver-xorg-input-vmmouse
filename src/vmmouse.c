@@ -75,6 +75,11 @@
 #include "xisb.h"
 #include "mipointer.h"
 
+#ifndef HAVE_XORG_SERVER_1_5_0
+#include <xf86_ansic.h>
+#include <xf86_libc.h>
+#endif
+
 /*****************************************************************************
  *	Local Headers
  ****************************************************************************/
@@ -249,7 +254,7 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
 }
 #endif
 
-   mPriv = xcalloc (1, sizeof (VMMousePrivRec));
+   mPriv = calloc (1, sizeof (VMMousePrivRec));
 
 
    if (!mPriv) {
@@ -270,7 +275,7 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
       xf86Msg(X_ERROR, "VMWARE(0): vmmouse enable failed\n");
       mPriv->vmmouseAvailable = FALSE;
       passthruMouse = (InputDriverRec *)LoaderSymbol("MOUSE");
-      xfree(mPriv);
+      free(mPriv);
       if(passthruMouse != NULL){
 	 return (passthruMouse->PreInit)(drv, dev, flags);
       } else {
@@ -291,7 +296,7 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    }
 
    if (!(pInfo = xf86AllocateInput(drv, 0))) {
-      xfree(mPriv);
+      free(mPriv);
       return NULL;
    }
 
@@ -316,8 +321,8 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    pInfo->conf_idev = dev;
 
    /* Allocate the MouseDevRec and initialise it. */
-   if (!(pMse = xcalloc(sizeof(MouseDevRec), 1))) {
-      xfree(mPriv);
+   if (!(pMse = calloc(sizeof(MouseDevRec), 1))) {
+      free(mPriv);
       return pInfo;
    }
 
@@ -340,8 +345,8 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
       else {
 	 xf86Msg(X_ERROR, "%s: cannot open input device\n", pInfo->name);
 	 if (pMse->mousePriv)
-	    xfree(pMse->mousePriv);
-	 xfree(pMse);
+	    free(pMse->mousePriv);
+	 free(pMse);
 	 pInfo->private = NULL;
 	 return pInfo;
       }
@@ -645,7 +650,7 @@ MouseCommonOptions(InputInfoPtr pInfo)
       }
       if (msg) {
 	 xf86Msg(X_CONFIG, "%s: ZAxisMapping: %s\n", pInfo->name, msg);
-	 xfree(msg);
+	 free(msg);
       } else {
 	 xf86Msg(X_WARNING, "%s: Invalid ZAxisMapping value: \"%s\"\n",
 		 pInfo->name, s);
@@ -1201,7 +1206,7 @@ VMMousePlug(pointer	module,
    if (!LoadSubModule(module, name, NULL, NULL, NULL, NULL, errmaj, errmin)) {
       LoaderErrorMsg(NULL, name, *errmaj, *errmin);
    }
-   xfree(name);
+   free(name);
 }
 #endif
 
