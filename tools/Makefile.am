@@ -33,8 +33,6 @@ hal-probe-vmmouse: hal-probe-vmmouse.in
 	    -e 's|__HAL_BIN_PREFIX__|$(HAL_BIN_DIR)|g' \
 	    < $< > $@
 
-EXTRA_DIST = hal-probe-vmmouse.in
-
 CLEANFILES = hal-probe-vmmouse
 
 if HAS_XORG_CONF_DIR
