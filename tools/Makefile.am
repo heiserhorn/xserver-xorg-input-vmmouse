@@ -50,7 +50,7 @@ udevdir=$(UDEV_RULES_DIR)
 udev_DATA = 69-xorg-vmmouse.rules
 
 $(udev_DATA): $(udev_DATA).in
-	sed -e 's|__BIN_PREFIX__|$(bindir)|g' < $< > $@
+	$(AM_V_GEN)$(SED) -e 's|__BIN_PREFIX__|$(bindir)|g' < $< > $@
 
 CLEANFILES += $(udev_DATA)
 
