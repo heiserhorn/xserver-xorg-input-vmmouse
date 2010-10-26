@@ -129,8 +129,8 @@ static void GetVMMouseMotionEvent(InputInfoPtr pInfo);
 static void VMMousePostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy, int dz, int dw);
 static void VMMouseDoPostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy);
 static Bool VMMouseDeviceControl(DeviceIntPtr device, int mode);
-static void VMMouseCloseProc(LocalDevicePtr local);
-static int  VMMouseControlProc(LocalDevicePtr local, xDeviceCtl * control);
+static void VMMouseCloseProc(InputInfoPtr pInfo);
+static int  VMMouseControlProc(InputInfoPtr pInfo, xDeviceCtl * control);
 static void VMMouseReadInput(InputInfoPtr pInfo);
 static int  VMMouseSwitchMode(ClientPtr client, DeviceIntPtr dev, int mode);
 static Bool VMMouseConvertProc(InputInfoPtr pInfo, int first, int num, int v0, int v1, int v2,
@@ -686,7 +686,7 @@ MouseCommonOptions(InputInfoPtr pInfo)
  */
 
 static void
-VMMouseUnInit(InputDriverPtr drv, LocalDevicePtr local, int flags)
+VMMouseUnInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags)
 {
    xf86Msg(X_INFO, "VMWARE(0): VMMouseUnInit\n");
 }
@@ -1033,7 +1033,7 @@ GetVMMouseMotionEvent(InputInfoPtr pInfo){
  */
 
 static int
-VMMouseControlProc(LocalDevicePtr local, xDeviceCtl * control)
+VMMouseControlProc(InputInfoPtr pInfo, xDeviceCtl * control)
 {
    xf86Msg(X_INFO, "VMWARE(0): VMMouseControlProc\n");
    return (Success);
@@ -1056,7 +1056,7 @@ VMMouseControlProc(LocalDevicePtr local, xDeviceCtl * control)
  */
 
 static void
-VMMouseCloseProc(LocalDevicePtr local)
+VMMouseCloseProc(InputInfoPtr pInfo)
 {
    xf86Msg(X_INFO, "VMWARE(0): VMMouseCloseProc\n");
 }
