@@ -276,7 +276,6 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
        */
       InputDriverRec *passthruMouse;
       xf86Msg(X_ERROR, "VMWARE(0): vmmouse enable failed\n");
-      mPriv->vmmouseAvailable = FALSE;
       passthruMouse = (InputDriverRec *)LoaderSymbol("MOUSE");
       free(mPriv);
       if(passthruMouse != NULL){
