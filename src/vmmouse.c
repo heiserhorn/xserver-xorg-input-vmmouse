@@ -217,6 +217,17 @@ static char reverseMap[32] = { 0,  4,  2,  6,  1,  5,  3,  7,
 
 #define reverseBits(map, b)	(((b) & ~0x0f) | map[(b) & 0x0f])
 
+static InputInfoPtr
+VMMouseInitPassthru(InputDriverPtr drv, IDevPtr dev, int flags)
+{
+   InputDriverRec *passthruMouse;
+   passthruMouse = (InputDriverRec *)LoaderSymbol("MOUSE");
+   if(passthruMouse != NULL) {
+      return (passthruMouse->PreInit)(drv, dev, flags);
+   } else {
+      return NULL;
+   }
+}
 
 /*
  *----------------------------------------------------------------------
@@ -274,16 +285,9 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
        * vmmouse failed
        * Fall back to normal mouse module
        */
-      InputDriverRec *passthruMouse;
       xf86Msg(X_ERROR, "VMWARE(0): vmmouse enable failed\n");
-      passthruMouse = (InputDriverRec *)LoaderSymbol("MOUSE");
       free(mPriv);
-      if(passthruMouse != NULL){
-	 return (passthruMouse->PreInit)(drv, dev, flags);
-      } else {
-	 return NULL;
-      }
-
+      return VMMouseInitPassthru(drv, dev, flags);
    } else {
       /*
        * vmmouse is available
