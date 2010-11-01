@@ -122,19 +122,23 @@ const char vm_mouse_version[] __attribute__((section(".modinfo"),unused)) =
 /*****************************************************************************
  *	static function header
  ****************************************************************************/
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 12
+static int VMMousePreInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags);
+#else
 static InputInfoPtr VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags);
+static void VMMouseCloseProc(InputInfoPtr pInfo);
+static Bool VMMouseConvertProc(InputInfoPtr pInfo, int first, int num, int v0, int v1, int v2,
+			       int v3, int v4, int v5, int *x, int *y);
+#endif
 static void VMMouseUnInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags);
 static void MouseCommonOptions(InputInfoPtr pInfo);
 static void GetVMMouseMotionEvent(InputInfoPtr pInfo);
 static void VMMousePostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy, int dz, int dw);
 static void VMMouseDoPostEvent(InputInfoPtr pInfo, int buttons, int dx, int dy);
 static Bool VMMouseDeviceControl(DeviceIntPtr device, int mode);
-static void VMMouseCloseProc(InputInfoPtr pInfo);
 static int  VMMouseControlProc(InputInfoPtr pInfo, xDeviceCtl * control);
 static void VMMouseReadInput(InputInfoPtr pInfo);
 static int  VMMouseSwitchMode(ClientPtr client, DeviceIntPtr dev, int mode);
-static Bool VMMouseConvertProc(InputInfoPtr pInfo, int first, int num, int v0, int v1, int v2,
-			       int v3, int v4, int v5, int *x, int *y);
 static void MouseCtrl(DeviceIntPtr device, PtrCtrl *ctrl);
 
 /******************************************************************************
@@ -217,6 +221,44 @@ static char reverseMap[32] = { 0,  4,  2,  6,  1,  5,  3,  7,
 
 #define reverseBits(map, b)	(((b) & ~0x0f) | map[(b) & 0x0f])
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 12
+static int
+VMMouseInitPassthru(InputDriverPtr drv, InputInfoPtr pInfo, int flags)
+{
+   InputAttributes *attrs = NULL;
+   InputOption *input_options = NULL, *tmp, *opts;
+   pointer options;
+   DeviceIntPtr dev;
+   int rc;
+
+   options = xf86OptionListDuplicate(pInfo->options);
+   options = xf86ReplaceStrOption(options, "Driver", "mouse");
+
+   while(options) {
+      tmp = calloc(1, sizeof(InputOption));
+      tmp->key = xf86OptionName(options);
+      tmp->value = xf86OptionValue(options);
+      tmp->next = input_options;
+      input_options = tmp;
+      options = xf86NextOption(options);
+   }
+
+   rc = NewInputDeviceRequest(input_options, attrs, &dev);
+
+   opts = input_options;
+   tmp = opts;
+   while(opts) {
+      tmp = opts->next;
+      free(opts->key);
+      free(opts->value);
+      free(opts);
+      opts = tmp;
+   }
+
+   return rc;
+}
+
+#else /* if ABI_XINPUT_VERSION < 12 */
 static InputInfoPtr
 VMMouseInitPassthru(InputDriverPtr drv, IDevPtr dev, int flags)
 {
@@ -228,6 +270,7 @@ VMMouseInitPassthru(InputDriverPtr drv, IDevPtr dev, int flags)
       return NULL;
    }
 }
+#endif
 
 /*
  *----------------------------------------------------------------------
@@ -248,12 +291,14 @@ VMMouseInitPassthru(InputDriverPtr drv, IDevPtr dev, int flags)
  *----------------------------------------------------------------------
  */
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 12
+static int
+VMMouseNewPreInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags);
+
 static InputInfoPtr
 VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
 {
    InputInfoPtr pInfo;
-   MouseDevPtr pMse;
-   VMMousePrivPtr mPriv;
 
 #ifndef NO_MOUSE_MODULE
 {
@@ -294,28 +339,11 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
       return NULL;
    }
 
-   mPriv = calloc (1, sizeof (VMMousePrivRec));
-
-   if (!mPriv) {
-      xf86DeleteInput(pInfo, 0);
-      return NULL;
-   }
-
-   mPriv->absoluteRequested = FALSE;
-   mPriv->vmmouseAvailable = TRUE;
-
-   /* Settup the pInfo */
    pInfo->name = dev->identifier;
-   pInfo->type_name = XI_MOUSE;
-   pInfo->flags = XI86_POINTER_CAPABLE | XI86_SEND_DRAG_EVENTS;
-   pInfo->device_control = VMMouseDeviceControl;
-   pInfo->read_input = VMMouseReadInput;
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
    pInfo->motion_history_proc = xf86GetMotionEvents;
 #endif
-   pInfo->control_proc = VMMouseControlProc;
    pInfo->close_proc = VMMouseCloseProc;
-   pInfo->switch_mode = VMMouseSwitchMode;
    pInfo->conversion_proc = VMMouseConvertProc;
    pInfo->reverse_conversion_proc = NULL;
    pInfo->fd = -1;
@@ -323,11 +351,62 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    pInfo->private_flags = 0;
    pInfo->always_core_feedback = 0;
    pInfo->conf_idev = dev;
+   pInfo->flags = XI86_POINTER_CAPABLE | XI86_SEND_DRAG_EVENTS;
+
+   /* Collect the options, and process the common options. */
+   xf86CollectInputOptions(pInfo, NULL, NULL);
+   xf86ProcessCommonOptions(pInfo, pInfo->options);
+
+   if (VMMouseNewPreInit(drv, pInfo, flags) == Success)
+       pInfo->flags |= XI86_CONFIGURED;
+
+   return pInfo;
+}
+
+static int
+VMMouseNewPreInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags)
+#else /* if ABI_XINPUT_VERSION >= 12 */
+static int
+VMMousePreInit(InputDriverPtr drv, InputInfoPtr pInfo, int flags)
+#endif
+{
+   MouseDevPtr pMse = NULL;
+   VMMousePrivPtr mPriv = NULL;
+   int rc = Success;
+
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 12
+   /* For ABI < 12, we need to return the wrapped driver's pInfo (see
+    * above). ABI 12, we call NIDR and are done */
+   if (!VMMouseClient_Enable()) {
+      xf86Msg(X_ERROR, "VMWARE(0): vmmouse enable failed\n");
+      return VMMouseInitPassthru(drv, pInfo, flags);
+   } else {
+      xf86Msg(X_INFO, "VMWARE(0): vmmouse is available\n");
+      VMMouseClient_Disable();
+   }
+#endif
+
+   mPriv = calloc (1, sizeof (VMMousePrivRec));
+
+   if (!mPriv) {
+      rc = BadAlloc;
+      goto error;
+   }
+
+   mPriv->absoluteRequested = FALSE;
+   mPriv->vmmouseAvailable = TRUE;
+
+   /* Settup the pInfo */
+   pInfo->type_name = XI_MOUSE;
+   pInfo->device_control = VMMouseDeviceControl;
+   pInfo->read_input = VMMouseReadInput;
+   pInfo->control_proc = VMMouseControlProc;
+   pInfo->switch_mode = VMMouseSwitchMode;
 
    /* Allocate the MouseDevRec and initialise it. */
    if (!(pMse = calloc(sizeof(MouseDevRec), 1))) {
-      free(mPriv);
-      return pInfo;
+      rc = BadAlloc;
+      goto error;
    }
 
    pInfo->private = pMse;
@@ -337,10 +416,6 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    pMse->mousePriv = mPriv;
 
 
-   /* Collect the options, and process the common options. */
-   xf86CollectInputOptions(pInfo, NULL, NULL);
-   xf86ProcessCommonOptions(pInfo, pInfo->options);
-
    /* Check if the device can be opened. */
    pInfo->fd = xf86OpenSerial(pInfo->options);
    if (pInfo->fd == -1) {
@@ -348,11 +423,8 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
 	 xf86Msg(X_WARNING, "%s: cannot open input device\n", pInfo->name);
       else {
 	 xf86Msg(X_ERROR, "%s: cannot open input device\n", pInfo->name);
-	 if (pMse->mousePriv)
-	    free(pMse->mousePriv);
-	 free(pMse);
-	 pInfo->private = NULL;
-	 return pInfo;
+	 rc = BadValue;
+	 goto error;
       }
    }
    xf86CloseSerial(pInfo->fd);
@@ -364,8 +436,16 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    /* set up the current screen num */
    mPriv->screenNum = xf86SetIntOption(pInfo->options, "ScreenNumber", 0);
 
-   pInfo->flags |= XI86_CONFIGURED;
-   return pInfo;
+   return Success;
+
+error:
+   pInfo->private = NULL;
+   if (mPriv)
+      free(mPriv);
+   if (pMse)
+      free(pMse);
+
+   return rc;
 }
 
 
@@ -1072,11 +1152,13 @@ VMMouseControlProc(InputInfoPtr pInfo, xDeviceCtl * control)
  *----------------------------------------------------------------------
  */
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 12
 static void
 VMMouseCloseProc(InputInfoPtr pInfo)
 {
    xf86Msg(X_INFO, "VMWARE(0): VMMouseCloseProc\n");
 }
+#endif
 
 
 /*
@@ -1117,6 +1199,7 @@ VMMouseSwitchMode(ClientPtr client, DeviceIntPtr dev, int mode)
  *----------------------------------------------------------------------
  */
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 12
 static Bool
 VMMouseConvertProc(InputInfoPtr pInfo, int first, int num, int v0, int v1, int v2,
 	     int v3, int v4, int v5, int *x, int *y)
@@ -1147,6 +1230,7 @@ VMMouseConvertProc(InputInfoPtr pInfo, int first, int num, int v0, int v1, int v
    }
    return TRUE;
 }
+#endif
 
 
 #ifdef XFree86LOADER
