@@ -268,15 +268,6 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
 }
 #endif
 
-   mPriv = calloc (1, sizeof (VMMousePrivRec));
-
-
-   if (!mPriv) {
-      return NULL;
-   }
-
-   mPriv->absoluteRequested = FALSE;
-
    /*
     * try to enable vmmouse here
     */
@@ -286,13 +277,11 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
        * Fall back to normal mouse module
        */
       xf86Msg(X_ERROR, "VMWARE(0): vmmouse enable failed\n");
-      free(mPriv);
       return VMMouseInitPassthru(drv, dev, flags);
    } else {
       /*
        * vmmouse is available
        */
-      mPriv->vmmouseAvailable = TRUE;
       xf86Msg(X_INFO, "VMWARE(0): vmmouse is available\n");
       /*
        * Disable the absolute pointing device for now
@@ -302,9 +291,18 @@ VMMousePreInit(InputDriverPtr drv, IDevPtr dev, int flags)
    }
 
    if (!(pInfo = xf86AllocateInput(drv, 0))) {
-      free(mPriv);
       return NULL;
    }
+
+   mPriv = calloc (1, sizeof (VMMousePrivRec));
+
+   if (!mPriv) {
+      xf86DeleteInput(pInfo, 0);
+      return NULL;
+   }
+
+   mPriv->absoluteRequested = FALSE;
+   mPriv->vmmouseAvailable = TRUE;
 
    /* Settup the pInfo */
    pInfo->name = dev->identifier;
