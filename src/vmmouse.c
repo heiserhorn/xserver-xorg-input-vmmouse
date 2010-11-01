@@ -787,13 +787,21 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
 				axes_labels[0],
 #endif
-				0, 65535, 10000, 0, 10000);
+				0, 65535, 10000, 0, 10000
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 12
+                                , Absolute
+#endif
+                                );
 #else
       xf86InitValuatorAxisStruct(device, 0,
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
 				axes_labels[0],
 #endif
-				0, -1, 1, 0, 1);
+				0, -1, 1, 0, 1
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 12
+                                , Relative
+#endif
+                                );
 #endif
       xf86InitValuatorDefaults(device, 0);
       /* Y valuator */
@@ -802,13 +810,21 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
 				axes_labels[1],
 #endif
-				0, 65535, 10000, 0, 10000);
+				0, 65535, 10000, 0, 10000
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 12
+                                , Absolute
+#endif
+                                );
 #else
       xf86InitValuatorAxisStruct(device, 1,
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
 				axes_labels[1],
 #endif
-				0, -1, 1, 0, 1);
+				0, -1, 1, 0, 1
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 12
+                                , Relative
+#endif
+                                );
 #endif
       xf86InitValuatorDefaults(device, 1);
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) == 0
