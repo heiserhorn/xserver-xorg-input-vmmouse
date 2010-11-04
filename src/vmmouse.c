@@ -110,12 +110,18 @@
 
 /*
  * Standard four digit version string expected by VMware Tools installer.
- * As the driver's version is only  {major, minor, patchlevel}, simply append an
- * extra zero for the fourth digit.
+ * As the driver's version is only  {major, minor, patchlevel},
+ * The fourth digit may describe the commit number relative to the
+ * last version tag as output from `git describe`
  */
 #ifdef __GNUC__
+#ifdef VMW_SUBPATCH
+const char vm_mouse_version[] __attribute__((section(".modinfo"),unused)) =
+    "version=" VMMOUSE_DRIVER_VERSION_STRING "." VMW_STRING(VMW_SUBPATCH);
+#else
 const char vm_mouse_version[] __attribute__((section(".modinfo"),unused)) =
     "version=" VMMOUSE_DRIVER_VERSION_STRING ".0";
+#endif /*VMW_SUBPATCH*/
 #endif
 
 
