@@ -5,6 +5,8 @@ xserver-xorg-input-vmmouse (1:12.6.10-1) UNRELEASED; urgency=low
 
   [ Cyril Brulebois ]
   * Update debian/copyright from upstream COPYING.
+  * Get rid of HAL-specific files since we're only buiding on Linux
+    architectures; those files weren't installed anyway.
 
  -- Robert Hooker <sarvatt@ubuntu.com>  Mon, 18 Oct 2010 15:50:48 -0400
 

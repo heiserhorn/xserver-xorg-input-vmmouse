@@ -72,6 +72,9 @@ install: build
 	dh_installdirs
 
 	cd build && $(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
+	# Remove HAL-specific file:
+	rm -f debian/tmp/usr/lib/hal/hal-probe-vmmouse
+	find debian/tmp/usr/share/hal -name '*.fdi' -delete
 
 # Build architecture-dependent files here.
 binary-arch: build install serverabi
