@@ -1,4 +1,4 @@
-xserver-xorg-input-vmmouse (1:12.6.10-1) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.10-1) experimental; urgency=low
 
   [ Robert Hooker ]
   * New upstream release.
@@ -9,7 +9,7 @@ xserver-xorg-input-vmmouse (1:12.6.10-1) UNRELEASED; urgency=low
     architectures; those files weren't installed anyway.
   * Switch from --list-missing to --fail-missing for additional safety.
 
- -- Robert Hooker <sarvatt@ubuntu.com>  Mon, 18 Oct 2010 15:50:48 -0400
+ -- Cyril Brulebois <kibi@debian.org>  Sat, 20 Nov 2010 00:09:43 +0100
 
 xserver-xorg-input-vmmouse (1:12.6.9-4) experimental; urgency=low
 
