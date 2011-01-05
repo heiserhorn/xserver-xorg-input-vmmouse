@@ -1,9 +1,9 @@
-xserver-xorg-input-vmmouse (1:12.6.99.901-1) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.6.99.901-1) experimental; urgency=low
 
   * New upstream release candidate.
   * Bump xutils-dev build-dep for new macros.
 
- -- Cyril Brulebois <kibi@debian.org>  Wed, 05 Jan 2011 01:51:36 +0100
+ -- Cyril Brulebois <kibi@debian.org>  Wed, 05 Jan 2011 01:57:21 +0100
 
 xserver-xorg-input-vmmouse (1:12.6.10-1) experimental; urgency=low
 
