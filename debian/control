@@ -23,7 +23,6 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${xinpdriver:Depends},
  xserver-xorg-input-mouse,
  udev
 Provides: ${xinpdriver:Provides}
-Replaces: xserver-xorg (<< 6.8.2-35)
 Description: X.Org X server -- VMMouse input driver to use with VMWare
  This package provides the driver for the X11 vmmouse input device.
  .
