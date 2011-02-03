@@ -1,3 +1,54 @@
+xserver-xorg-input-vmmouse (1:12.6.99.901-2) UNRELEASED; urgency=low
+
+  * Switch to dh:
+    - Use debhelper 8.
+    - Use dh-autoreconf.
+    - Bump xserver-xorg-dev build-dep for dh_xsf_substvars and xsf
+      debhelper sequence.
+    - Tweak vmmouse_detect's entry in .install, making explicit it is
+      installed under /usr/bin upstream, and shipped under /bin.
+  * Remove xserver-xorg-input-vmmouse.postinst.in's .in suffix. There's
+    no need to do any substitution.
+  * Remove xsfbs accordingly.
+  * Remove long obsolete Replaces.
+  * Update Uploaders list. Thanks, David & Brice!
+  * Wrap Depends/Provides.
+  * Bump Standards-Version to 3.9.1 (no changes needed).
+
+ -- Cyril Brulebois <kibi@debian.org>  Thu, 03 Feb 2011 05:55:04 +0100
+
+xserver-xorg-input-vmmouse (1:12.6.99.901-1) experimental; urgency=low
+
+  * New upstream release candidate.
+  * Bump xutils-dev build-dep for new macros.
+
+ -- Cyril Brulebois <kibi@debian.org>  Wed, 05 Jan 2011 01:57:21 +0100
+
+xserver-xorg-input-vmmouse (1:12.6.10-1) experimental; urgency=low
+
+  [ Robert Hooker ]
+  * New upstream release.
+
+  [ Cyril Brulebois ]
+  * Update debian/copyright from upstream COPYING.
+  * Get rid of HAL-specific files since we're only buiding on Linux
+    architectures; those files weren't installed anyway.
+  * Switch from --list-missing to --fail-missing for additional safety.
+
+ -- Cyril Brulebois <kibi@debian.org>  Sat, 20 Nov 2010 00:09:43 +0100
+
+xserver-xorg-input-vmmouse (1:12.6.9-4) experimental; urgency=low
+
+  * Merge xsfbs to get unversioned Provides.
+
+ -- Cyril Brulebois <kibi@debian.org>  Sat, 16 Oct 2010 15:00:44 +0200
+
+xserver-xorg-input-vmmouse (1:12.6.9-3) experimental; urgency=low
+
+  * Build against Xserver 1.9.1 rc1.
+
+ -- Cyril Brulebois <kibi@debian.org>  Wed, 13 Oct 2010 01:22:34 +0200
+
 xserver-xorg-input-vmmouse (1:12.6.9-2) unstable; urgency=low
 
   [ Robert Hooker ]

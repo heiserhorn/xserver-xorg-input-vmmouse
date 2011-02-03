@@ -1,5 +1,5 @@
 usr/lib/xorg/modules/input/*.so
-bin/vmmouse_detect
+usr/bin/vmmouse_detect bin/
 usr/share/man
 usr/share/X11/xorg.conf.d
 lib/udev/rules.d
