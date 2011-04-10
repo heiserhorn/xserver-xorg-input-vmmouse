@@ -1,3 +1,23 @@
+commit de2b5ca7a76f1ffac1e8d4ed88408dda0f77a83c
+Author: Thomas Hellstrom <thellstrom@vmware.com>
+Date:   Wed Mar 2 11:50:12 2011 +0100
+
+    vmmouse 12.7.0
+    
+    Remove trailing zero from version number.
+    
+    Signed-off-by: Thomas Hellstrom <thellstrom@vmware.com>
+
+commit cfaffd24413a31ebd7ae766ac39ed366902e38e5
+Author: Thomas Hellstrom <thellstrom@vmware.com>
+Date:   Wed Mar 2 09:06:47 2011 +0100
+
+    vmmouse 12.7.0.0
+    
+    VMware internal testing completed.
+    
+    Signed-off-by: Thomas Hellstrom <thellstrom@vmware.com>
+
 commit 07232feb6b5acc5c25e9cdf12b804397ca52dbce
 Author: Thomas Hellstrom <thellstrom@vmware.com>
 Date:   Wed Dec 8 10:07:20 2010 +0100
