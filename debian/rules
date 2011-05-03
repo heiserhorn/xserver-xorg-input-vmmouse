@@ -1,5 +1,9 @@
 #!/usr/bin/make -f
 
+# vmmouse_detect is installed under /bin:
+override_dh_auto_configure:
+	dh_auto_configure -- --bindir=/bin
+
 # Install in debian/tmp to retain control through dh_install:
 override_dh_auto_install:
 	dh_auto_install --destdir=debian/tmp
