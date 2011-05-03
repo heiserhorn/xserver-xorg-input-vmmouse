@@ -1,10 +1,10 @@
-xserver-xorg-input-vmmouse (1:12.7.0-2) UNRELEASED; urgency=low
+xserver-xorg-input-vmmouse (1:12.7.0-2) unstable; urgency=low
 
   * Pass --bindir=/bin to configure, lost in the dh-ification. Thanks to
     Jordi Pujol for the bug (Closes: #625291).
   * Adapt .install file accordingly.
 
- -- Cyril Brulebois <kibi@debian.org>  Tue, 03 May 2011 12:42:49 +0200
+ -- Cyril Brulebois <kibi@debian.org>  Tue, 03 May 2011 12:48:40 +0200
 
 xserver-xorg-input-vmmouse (1:12.7.0-1) unstable; urgency=low
 
