@@ -1120,12 +1120,12 @@ GetVMMouseMotionEvent(InputInfoPtr pInfo){
    VMMousePrivPtr mPriv;
    int buttons, dx, dy, dz, dw;
    VMMOUSE_INPUT_DATA  vmmouseInput;
-   int ps2Buttons = 0;
    int numPackets;
 
    pMse = pInfo->private;
    mPriv = (VMMousePrivPtr)pMse->mousePriv;
    while((numPackets = VMMouseClient_GetInput(&vmmouseInput))){
+      int ps2Buttons = 0;
       if (numPackets == VMMOUSE_ERROR) {
          VMMouseClient_Disable();
          VMMouseClient_Enable();
