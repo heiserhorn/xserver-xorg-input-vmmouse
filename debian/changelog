@@ -1,3 +1,9 @@
+xserver-xorg-input-vmmouse (1:12.7.0-2~bpo60+1) squeeze-backports; urgency=low
+
+  * Rebuild for squeeze-backports.
+
+ -- Cyril Brulebois <kibi@debian.org>  Fri, 02 Dec 2011 12:25:55 +0100
+
 xserver-xorg-input-vmmouse (1:12.7.0-2) unstable; urgency=low
 
   * Pass --bindir=/bin to configure, lost in the dh-ification. Thanks to
