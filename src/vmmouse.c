@@ -73,6 +73,10 @@
 #include "exevents.h"
 #endif
 
+#if GET_ABI_MAJOR(ABI_XINPUT_VERSION) < 18
+#define LogMessageVerbSigSafe xf86MsgVerb
+#endif
+
 #include "xisb.h"
 #include "mipointer.h"
 
@@ -1063,7 +1067,7 @@ VMMouseReadInput(InputInfoPtr pInfo)
        */
       VMMouseClient_RequestAbsolute();
       mPriv->absoluteRequested = TRUE;
-      xf86Msg(X_INFO, "VMWARE(0): vmmouse enable absolute mode\n");
+      LogMessageVerbSigSafe(X_INFO, -1, "VMWARE(0): vmmouse enable absolute mode\n");
    }
 
    /*
@@ -1130,7 +1134,7 @@ GetVMMouseMotionEvent(InputInfoPtr pInfo){
          VMMouseClient_Disable();
          VMMouseClient_Enable();
          VMMouseClient_RequestAbsolute();
-         xf86Msg(X_INFO, "VMWARE(0): re-requesting absolute mode after reset\n");
+         LogMessageVerbSigSafe(X_INFO, -1, "VMWARE(0): re-requesting absolute mode after reset\n");
          break;
       }
 
