@@ -729,19 +729,14 @@ static void
 MouseCommonOptions(InputInfoPtr pInfo)
 {
    MouseDevPtr pMse;
-   MessageType from = X_DEFAULT;
    char *s;
-   int origButtons;
 
    pMse = pInfo->private;
 
    pMse->buttons = xf86SetIntOption(pInfo->options, "Buttons", 0);
-   from = X_CONFIG;
    if (!pMse->buttons) {
       pMse->buttons = MSE_DFLTBUTTONS;
-      from = X_DEFAULT;
    }
-   origButtons = pMse->buttons;
 
    /*
     * "emulate3Buttons" and "Drag Lock" is not supported
@@ -790,13 +785,6 @@ MouseCommonOptions(InputInfoPtr pInfo)
 		 pInfo->name, s);
       }
    }
-
-   /*
-    * Emulatewheel is not supported
-    */
-   if (origButtons != pMse->buttons)
-      from = X_CONFIG;
-
 }
 
 
@@ -847,7 +835,6 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
 {
    InputInfoPtr pInfo;
    MouseDevPtr pMse;
-   VMMousePrivPtr mPriv;
    unsigned char map[MSE_MAXBUTTONS + 1];
    int i;
 #if GET_ABI_MAJOR(ABI_XINPUT_VERSION) >= 7
@@ -858,7 +845,6 @@ VMMouseDeviceControl(DeviceIntPtr device, int mode)
    pInfo = device->public.devicePrivate;
    pMse = pInfo->private;
    pMse->device = device;
-   mPriv = (VMMousePrivPtr)pMse->mousePriv;
 
    switch (mode){
    case DEVICE_INIT:
