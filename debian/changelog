@@ -1,3 +1,9 @@
+xserver-xorg-input-vmmouse (1:13.0.0-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+
+ -- Michele Cane <michele.cane@gmail.com>  Thu, 11 Jul 2013 10:45:03 +0200
+
 xserver-xorg-input-vmmouse (1:12.9.0-1) unstable; urgency=low
 
   [ Robert Hooker ]
